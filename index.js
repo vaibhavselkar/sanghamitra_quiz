@@ -8,10 +8,12 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Connect to PostgreSQL online database supabase
+// Connect to PostgreSQL online database (Supabase)
 const client = new pg.Client({
-    connectionString: 'postgres://postgres.vefsrnhnzjtpgrqppoml:6~p9yT.YZq*tE64@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres',
-    ssl: { rejectUnauthorized: false } // Add this line to allow connection over SSL
+    connectionString: process.env.DATABASE_URL, // Use environment variable for connection string
+    ssl: {
+        rejectUnauthorized: false, // Add this line to allow connection over SSL
+    },
 });
 
 client.connect();
