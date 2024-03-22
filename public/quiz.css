@@ -1,0 +1,90 @@
+/* quiz.css */
+
+/* Styling for the quiz heading */
+.quiz-page {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  /* Styling for the quiz heading */
+  .quiz-page h1 {
+    padding: 15px 30px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2em;
+}
+  
+  
+  /* Styling for the quiz subheadings */
+  .quiz-page h2 {
+    color: #666;
+    font-size: 22px;
+    font-weight: normal;
+    margin-top: 20px;
+  }
+
+#questionscontainer {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 20px;
+}
+
+
+
+.question {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    align-items: flex-start; 
+}
+
+.option {
+    margin-top: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.option:hover {
+    background-color: #f0f0f0;
+}
+
+.option.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+
+.options {
+  display: flex;
+  flex-direction: column;
+}
+
+.previous-button,
+.next-button,
+.submit-button {
+    background-color: blue;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.previous-button:disabled,
+.next-button:disabled,
+.submit-button:disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+}
+
