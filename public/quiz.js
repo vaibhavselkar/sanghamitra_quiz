@@ -50,8 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Event listener for the "Submit" button
     submitButton.addEventListener('click', () => {
-        const score = calculateScore(); 
-        submitForm(score); 
+        calculateScore();
     });
 
     // Function to select option for each question
@@ -74,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
         // Submit form with name and score
-        return score
+        submitForm(score);
     }
 
     // Function to submit form with name and score
@@ -86,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: nameInput.value,
+                name: nameInput.value, // Get the value from the name input field
                 score: score,
                 subject: pageName // Corrected assignment operator
             })
