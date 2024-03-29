@@ -10,21 +10,26 @@
     <div class="quiz-page">
         <h1>Math Quiz</h1>
         <h2>The Sanghamitra learning platform is providing an approach towards real learning by accepting the concepts.</h2>
-        <h2>There will be 50 questions in this exam, which are divided into 10 pages. After selecting all answers, click on the submit button, and you will get the score.</h2>
-        
-        <form id="myForm">
-          <label for="name">Name:</label><br>
-          <input type="text" id="name" name="name"><br>
+        <h2>There will be 50 questions in this exam, which are divided into 10 pages. After entering your name, click anywhere on the page to proceed to the quiz.</h2>
+
+        <!-- Form to input name -->
+        <form id="nameForm">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br>
         </form>
         
+        <!-- Container for questions -->
         <div id="questionscontainer"></div>
-        <div class="pagination">
-            <button id="prevButton" disabled>Previous</button>
-            <button id="nextButton">Next</button>
-        </div>
-         <!-- Submit button -->
+
+        <!-- Pagination buttons -->
+        <button id="prevButton" style="display: none;">Previous</button>
+        <button id="nextButton" style="display: none;">Next</button>
+
+        <!-- Submit button -->
         <button id="submitButton" style="display: none;">Submit</button>
     </div>
-    <script src="quiz.js"></script> <!-- Include quiz.js for fetching questions and handling quiz logic -->
+
+    <!-- JavaScript file -->
+    <script src="quiz.js"></script>
 </body>
 </html>
