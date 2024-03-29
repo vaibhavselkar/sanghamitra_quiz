@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
         questionsContainer.innerHTML = ''; // Clear previous questions
         const startIndex = (currentPage - 1) * pageSize;
         const endIndex = Math.min(startIndex + pageSize, questions.length);
-
+    
         for (let i = startIndex; i < endIndex; i++) {
             const question = questions[i];
             const questionElement = document.createElement('div');
@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function() {
             `;
             questionsContainer.appendChild(questionElement);
         }
-
-        // Add submit button on the last page
+    
+        // Add submit button only on the last page
         if (currentPage === totalPages) {
             const submitButton = document.createElement('button');
             submitButton.textContent = 'Submit';
@@ -54,17 +54,16 @@ document.addEventListener("DOMContentLoaded", function() {
             submitButton.addEventListener('click', calculateScore);
             questionsContainer.appendChild(submitButton);
         }
-
+    
         // Enable or disable pagination buttons based on current page
         prevButton.disabled = currentPage === 1;
         nextButton.disabled = currentPage === totalPages;
-
+    
         // Add event listeners to options
         document.querySelectorAll('.option').forEach(option => {
             option.addEventListener('click', selectOption);
         });
     }
-
     // Event listener for the "Next" button
     nextButton.addEventListener('click', () => {
         if (currentPage < totalPages) {
