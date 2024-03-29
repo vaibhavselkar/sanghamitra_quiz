@@ -84,14 +84,6 @@ document.addEventListener("DOMContentLoaded", function() {
         prevButton.classList.add('submit-button');// Add class for styling to next button
     });
 
-    submitButton.addEventListener('click', () => {
-        // Additional logic for handling the submission of the quiz
-        // Add or remove a class to change the appearance of the button
-        calculateScore(); // Call the function to calculate the score
-        window.location.href = 'submission.html'; // Redirect to the submission page
-
-    });
-
     // Function to select option for each question
     function selectOption(event) {
         const index = event.target.dataset.index;
@@ -111,6 +103,34 @@ document.addEventListener("DOMContentLoaded", function() {
                 score++;
             }
         }
-        window.location.href = `submission.html?score=${score}`; // Redirect to the submission page with the score as a query parameter
+        // Handle form submission with the score
+        submitForm(score);
+    }
+
+    // Function to submit form with score
+    function submitForm(score) {
+        const name = document.getElementById('name').value;
+        const pageName = window.location.pathname.split('.')[0]; // get the current page name
+
+        fetch('http://localhost:7200/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                score: score,
+                pageName: pageName
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Log the response
+            // Redirect to submission page with score as query parameter
+            window.location.href = `submission.html?score=${score}`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 });
