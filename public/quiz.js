@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function to submit form with name and score
     function submitForm(name, score) {
         const pageName = window.location.pathname.split('.')[0];
-        fetch('https://my-postgres-server.vercel.app/submit', {
+        fetch('https://my-postgres-server.vercel.app/data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
