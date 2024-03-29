@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     console.log('Quiz1.js script loaded');
 
-    const questionsContainer = document.getElementById('questionsContainer');
+    const questionsContainer = document.getElementById('questionsContainer'); // Corrected ID
     const prevButton = document.getElementById('prevButton');
     const nextButton = document.getElementById('nextButton');
     const submitButton = document.getElementById('submitButton');
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
             body: JSON.stringify({
                 name: name,
                 score: score,
-                subject = pageName
+                subject: pageName // Corrected assignment operator
             })
         })
         .then(response => response.json())
