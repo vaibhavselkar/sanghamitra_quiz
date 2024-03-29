@@ -118,8 +118,8 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             body: JSON.stringify({
                 name: name,
-                score: score
-                pageName = pageName
+                score: score,
+                subject = pageName
             })
         })
         .then(response => response.json())
