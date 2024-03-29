@@ -4,30 +4,35 @@ document.addEventListener("DOMContentLoaded", function() {
     const questionsContainer = document.getElementById('questionscontainer');
     const prevButton = document.getElementById('prevButton');
     const nextButton = document.getElementById('nextButton');
+    const submitButton = document.getElementById('submitButton'); // Added
+    const nameInput = document.getElementById('name'); // Added
     let currentPage = 1;
     let pageSize = 5; // Display 5 questions per page
     let totalPages;
     let questions;
     let selectedOptions = new Array(50).fill(null); // Array to store selected options
+    let name; // Variable to store the name
 
-    // Fetch questions data
-    fetch('https://my-postgres-server.vercel.app/quiz1') // Assuming this endpoint returns the JSON data provided
-        .then(res => res.json())
-        .then(data => {
-            questions = data;
-            totalPages = Math.ceil(questions.length / pageSize);
-            displayQuestions();
-        })
-        .catch(error => {
-            console.error('Error fetching questions:', error); // Log error fetching questions
-        });
+    // Function to fetch questions data
+    function fetchQuestions() {
+        fetch('https://my-postgres-server.vercel.app/quiz1')
+            .then(res => res.json())
+            .then(data => {
+                questions = data;
+                totalPages = Math.ceil(questions.length / pageSize);
+                displayQuestions();
+            })
+            .catch(error => {
+                console.error('Error fetching questions:', error);
+            });
+    }
 
     // Function to display the questions for the current page
     function displayQuestions() {
         questionsContainer.innerHTML = ''; // Clear previous questions
         const startIndex = (currentPage - 1) * pageSize;
         const endIndex = Math.min(startIndex + pageSize, questions.length);
-    
+
         for (let i = startIndex; i < endIndex; i++) {
             const question = questions[i];
             const questionElement = document.createElement('div');
@@ -45,33 +50,21 @@ document.addEventListener("DOMContentLoaded", function() {
             `;
             questionsContainer.appendChild(questionElement);
         }
-    
-        // Add submit button only on the last page
-        if (currentPage === totalPages) {
-            const submitButton = document.createElement('button');
-            submitButton.textContent = 'Submit';
-            submitButton.classList.add('submit-button'); // Add class for styling
-            submitButton.addEventListener('click', calculateScore);
-            questionsContainer.appendChild(submitButton);
-        }
-    
-        // Enable or disable pagination buttons based on current page
+
+        // Show or hide pagination buttons based on current page
         prevButton.disabled = currentPage === 1;
         nextButton.disabled = currentPage === totalPages;
-    
-        // Add event listeners to options
-        document.querySelectorAll('.option').forEach(option => {
-            option.addEventListener('click', selectOption);
-        });
+
+        // Hide submit button if not on the last page
+        submitButton.style.display = currentPage === totalPages ? 'block' : 'none';
     }
+
     // Event listener for the "Next" button
     nextButton.addEventListener('click', () => {
         if (currentPage < totalPages) {
             currentPage++;
             displayQuestions();
         }
-        nextButton.classList.add('submit-button');// Add class for styling to next button
-        
     });
 
     // Event listener for the "Previous" button
@@ -80,7 +73,11 @@ document.addEventListener("DOMContentLoaded", function() {
             currentPage--;
             displayQuestions();
         }
-        prevButton.classList.add('submit-button');// Add class for styling to next button
+    });
+
+    // Event listener for the "Submit" button
+    submitButton.addEventListener('click', () => {
+        calculateScore();
     });
 
     // Function to select option for each question
@@ -102,24 +99,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 score++;
             }
         }
-        // Handle form submission with the score
-        submitForm(score);
+        // Submit form with name and score
+        submitForm(name, score);
     }
 
-    // Function to submit form with score
-    function submitForm(score) {
-        const name = document.getElementById('name').value;
-        const pageName = window.location.pathname.split('.')[0]; // get the current page name
-
-        fetch('https://my-postgres-server.vercel.app/quiz1', {
+    // Function to submit form with name and score
+    function submitForm(name, score) {
+        fetch('https://my-postgres-server.vercel.app/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 name: name,
-                score: score,
-                pageName: pageName
+                score: score
             })
         })
         .then(response => response.json())
@@ -132,4 +125,17 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error('Error:', error);
         });
     }
+
+    // Initial setup: Fetch questions and display the first page
+    fetchQuestions();
+
+    // Event listener for name input
+    nameInput.addEventListener('input', (event) => {
+        name = event.target.value; // Update name variable when input changes
+    });
+
+    // Add event listeners to options
+    document.querySelectorAll('.option').forEach(option => {
+        option.addEventListener('click', selectOption);
+    });
 });
