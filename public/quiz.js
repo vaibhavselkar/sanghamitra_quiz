@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let selectedOptions = new Array(50).fill(null); // Array to store selected options
 
     // Fetch questions data
-    fetch('http://localhost:9999/quiz1') // Assuming this endpoint returns the JSON data provided
+    fetch('https://server-clone-suraj-98fp.vercel.app/') // Assuming this endpoint returns the JSON data provided
         .then(res => res.json())
         .then(data => {
             questions = data;
