@@ -50,7 +50,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Event listener for the "Submit" button
     submitButton.addEventListener('click', () => {
-        calculateScore();
+        const score = calculateScore(); 
+        submitForm(score); 
     });
 
     // Function to select option for each question
@@ -73,11 +74,11 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
         // Submit form with name and score
-        submitForm(name, score);
+        return score
     }
 
     // Function to submit form with name and score
-    function submitForm(name, score) {
+    function submitForm(score) {
         const pageName = window.location.pathname.split('.')[0];
         fetch('https://my-postgres-server.vercel.app/data', {
             method: 'POST',
@@ -85,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: name,
+                name: nameInput.value,
                 score: score,
                 subject: pageName // Corrected assignment operator
             })
