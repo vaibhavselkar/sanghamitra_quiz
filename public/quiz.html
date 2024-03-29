@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basic Math Quiz</title>
     <link rel="stylesheet" href="quiz.css">
-</head><body>
+</head>
+<body>
     <div class="quiz-page">
         <h1>Math Quiz</h1>
-        <h2>The Sanghamitra learning platform is providing a approach towards the real learning by accepting the concepts.</h2>
-        <h2>There will be 50 questions in this exam, which are devided into 10 pages. After selecting all answers click on submit button and you will get the score.</h2>
-
+        <h2>The Sanghamitra learning platform is providing an approach towards real learning by accepting the concepts.</h2>
+        <h2>There will be 50 questions in this exam, which are divided into 10 pages. After selecting all answers, click on the submit button, and you will get the score.</h2>
         
         <form id="myForm">
           <label for="name">Name:</label><br>
@@ -24,51 +24,6 @@
             <button id="nextButton">Next</button>
         </div>
     </div>
-    <script src="quiz.js"></script> <!-- Include quiz.js for fetching questions -->
-    <script>
-        // JavaScript code for pagination
-        const questionsContainer = document.getElementById('questionscontainer');
-        const prevButton = document.getElementById('prevButton');
-        const nextButton = document.getElementById('nextButton');
-        let currentPage = 1;
-        let totalPages = Math.ceil(10 / 10); // Assuming there are 10 questions in total
-
-        // Function to display the questions for the current page
-        function displayQuestions() {
-            questionsContainer.innerHTML = ''; // Clear previous questions
-            const startIndex = (currentPage - 1) * 10;
-            const endIndex = startIndex + 10;
-            const pageQuestions = questions.slice(startIndex, endIndex);
-
-            pageQuestions.forEach(question => {
-                const questionElement = document.createElement('div');
-                questionElement.innerText = question.question_text;
-                questionsContainer.appendChild(questionElement);
-            });
-        }
-
-        // Initially display the first ten questions
-        displayQuestions();
-
-        // Event listener for the "Next" button
-        nextButton.addEventListener('click', () => {
-            if (currentPage < totalPages) {
-                currentPage++;
-                displayQuestions();
-            } else {
-                nextButton.disabled = true; // Disable the "Next" button when all questions are displayed
-            }
-        });
-
-        // Event listener for the "Previous" button
-        prevButton.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                displayQuestions();
-            } else {
-                prevButton.disabled = true; // Disable the "Previous" button when on the first page
-            }
-        });
-    </script>
+    <script src="quiz.js"></script> <!-- Include quiz.js for fetching questions and handling quiz logic -->
 </body>
 </html>
