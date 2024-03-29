@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const name = document.getElementById('name').value;
         const pageName = window.location.pathname.split('.')[0]; // get the current page name
 
-        fetch('http://localhost:7200/data', {
+        fetch('https://my-postgres-server.vercel.app/quiz1', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
