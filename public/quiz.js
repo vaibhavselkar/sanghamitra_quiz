@@ -4,14 +4,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const questionsContainer = document.getElementById('questionscontainer');
     const prevButton = document.getElementById('prevButton');
     const nextButton = document.getElementById('nextButton');
-    const submitButton = document.getElementById('submitButton'); // Added
-    const nameInput = document.getElementById('name'); // Added
+    const submitButton = document.getElementById('submitButton');
+    const nameInput = document.getElementById('name');
     let currentPage = 1;
     let pageSize = 5; // Display 5 questions per page
     let totalPages;
     let questions;
     let selectedOptions = new Array(50).fill(null); // Array to store selected options
-    let name; // Variable to store the name
+    let name;
 
     // Function to fetch questions data
     function fetchQuestions() {
@@ -57,6 +57,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Hide submit button if not on the last page
         submitButton.style.display = currentPage === totalPages ? 'block' : 'none';
+
+        // Add event listeners to options
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', selectOption);
+        });
     }
 
     // Event listener for the "Next" button
@@ -132,10 +137,5 @@ document.addEventListener("DOMContentLoaded", function() {
     // Event listener for name input
     nameInput.addEventListener('input', (event) => {
         name = event.target.value; // Update name variable when input changes
-    });
-
-    // Add event listeners to options
-    document.querySelectorAll('.option').forEach(option => {
-        option.addEventListener('click', selectOption);
     });
 });
