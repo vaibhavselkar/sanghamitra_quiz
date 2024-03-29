@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     console.log('Quiz1.js script loaded');
 
-    const questionsContainer = document.getElementById('questionscontainer');
+    const questionsContainer = document.getElementById('questionsContainer');
     const prevButton = document.getElementById('prevButton');
     const nextButton = document.getElementById('nextButton');
     const submitButton = document.getElementById('submitButton');
