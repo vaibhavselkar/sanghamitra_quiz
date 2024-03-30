@@ -20,29 +20,8 @@
         </form>
     </div>
 
-    <a class="quiz-button" href="./quiz.html">Start Quiz</a>
+    <a class="quiz-button" href="./quiz.html">Start Math Quiz</a>
 
-    <script>
-      document.getElementById('enrollment-form').addEventListener('submit', async function(event) {
-          event.preventDefault(); // Prevent the default form submission
-          
-          const candidateName = document.getElementById('candidateName').value;
-          const score = 100; // Replace with the actual score value
-          
-          try {
-            console.log(candidateName, score)
-              const response = await fetch('http://localhost:9999/submit-name', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({ candidateName, score })
-              });
   
-          } catch (error) {
-              console.error('Error submitting enrollment:', error);
-          }
-      });
-  </script>
 </body>
 </html>
