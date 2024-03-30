@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to fetch questions data
     function fetchQuestions() {
-        fetch('https://my-postgres-server.vercel.app/quiz1')
+        fetch('https://my-postgres-server.vercel.app/math_q1')
             .then(res => res.json())
             .then(data => {
                 questions = data;
