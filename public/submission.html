@@ -24,26 +24,7 @@
         const score = urlParams.get('score');
 
         // Display the score
-        document.getElementById('score').textContent = `You scored ${(score/50)*100}%`;
-
-        // Send the score to the server to save in the database
-        fetch('/submit-score', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ score: score })
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Score submitted successfully!');
-            } else {
-                throw new Error('Failed to submit score');
-            }
-        })
-        .catch(error => {
-            console.error('Error submitting score:', error);
-        });
+        document.getElementById('score').textContent = `You scored ${score}%`;
 
     </script>
 </body>
