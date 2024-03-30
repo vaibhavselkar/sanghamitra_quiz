@@ -48,9 +48,10 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Event listener for the "Submit" button
-    submitButton.addEventListener('click', () => {
-        calculateScore();
+    submitButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent form submission
+        const score = calculateScore(); // Calculate the score
+        window.open(`submission.html?score=${score}`, '_blank'); // Open the submission page with the score as a query parameter
     });
 
     // Function to select option for each question
@@ -73,11 +74,12 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
         // Submit form with name and score
-        submitForm(score);
+        submitForm(nameInput, score);
+        return score;
     }
 
     // Function to submit form with name and score
-    function submitForm(score) {
+    function submitForm(nameInput, score) {
         const pageName = window.location.pathname.split('.')[0];
         fetch('https://my-postgres-server.vercel.app/data', {
             method: 'POST',
