@@ -68,19 +68,21 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function to calculate score
     function calculateScore() {
         let score = 0;
-        for (let i = 0; i < questions.length; i++) {
+        const totalQuestions = questions.length;
+    
+        for (let i = 0; i < totalQuestions; i++) {
             if (selectedOptions[i] === questions[i].correct_option) {
                 score++;
             }
         }
-        // Submit form with name and score
-        submitForm(nameInput, score);
-        return score;
+    
+        score = (score / totalQuestions) * 100; // Calculate the percentage
+        submitForm(nameInput, score); // Submit form with name and score
+        return score; // Return the score as a percentage
     }
 
     // Function to submit form with name and score
     function submitForm(nameInput, score) {
-        const pageName = window.location.pathname.split('.')[0];
         fetch('https://my-postgres-server.vercel.app/data', {
             method: 'POST',
             headers: {
@@ -89,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
             body: JSON.stringify({
                 name: nameInput.value, // Get the value from the name input field
                 score: score,
-                subject: pageName // Corrected assignment operator
+                subject: 'math_q1' // Corrected assignment operator
             })
         })
         .then(response => response.json())
