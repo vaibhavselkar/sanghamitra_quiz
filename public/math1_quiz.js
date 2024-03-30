@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    console.log('Quiz1.js script loaded');
+    console.log('math_q1.js script loaded');
 
     const questionsContainer = document.getElementById('questionsContainer');
     const submitButton = document.getElementById('submitButton');
