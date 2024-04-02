@@ -1,83 +1,73 @@
-// scatterplot.js
+// We can add this visualization on last page.
+// visualization.js
 
-// Function to fetch data and create scatter plot
-function createScatterPlot() {
+// Function to fetch data and create visualization
+function createVisualization() {
     // Fetch data from the server
     fetch('https://my-postgres-server.vercel.app/scores')
         .then(response => response.json())
-        .then(serverData => {
-            // Extract information for all test takers
-            const names = serverData.map(entry => entry.name);
-            const scores = serverData.map(entry => entry.score);
+        .then(userData => {
+            // Extract scores and names
+            const scores = userData.map(entry => entry.score);
+            const names = userData.map(entry => entry.name);
 
-            // Extract the last test taker's information
-            const lastTestTakerIndex = scores.length - 1;
-            const lastTestTakerName = names[lastTestTakerIndex];
-            const lastTestTakerScore = scores[lastTestTakerIndex];
+            // Create data trace for the histogram
+            const data = [{
+                x: scores,
+                type: 'histogram',
+                name: 'Score Distribution'
+            }];
 
-            // Create scatter plot trace for all test takers
-            const scatterTrace = {
-                x: names,
-                y: scores,
-                mode: 'markers',
+            // Calculate the bin width for the histogram
+            const binWidth = Math.round((Math.max(...scores) - Math.min(...scores)) / 10);
+
+            // Calculate the bin where the last user's score lies
+            const lastUserIndex = scores.length - 1;
+            const lastUserScore = scores[lastUserIndex];
+            const lastUserBin = Math.floor((lastUserScore - Math.min(...scores)) / binWidth) * binWidth;
+
+            // Create data trace for the vertical line representing the last user's score
+            const lineData = [{
+                x: [lastUserBin, lastUserBin],
+                y: [0, 100], // Adjust y-axis range as needed
+                mode: 'lines',
                 type: 'scatter',
-                name: 'Test Taker Scores',
-                text: names.map((name, index) => `Name: ${name}<br>Score: ${scores[index]}`), // Display name and score on hover
-                hoverinfo: 'text'
-            };
+                name: 'Your Score',
+                line: {
+                    color: 'red',
+                    width: 2
+                }
+            }];
 
-            // Highlight the last test taker's score with a different marker color
-            scatterTrace.marker = {
-                color: scores.map((score, index) => (index === lastTestTakerIndex ? 'red' : 'blue')), // Set marker color based on test taker index
-                size: 8 // Adjust size as needed
-            };
-
-            // Create a shape annotation for the red dashed line
+            // Add text annotation with the name and score of the last user
             const annotation = {
-                x: [lastTestTakerName],
-                y: [lastTestTakerScore],
-                xref: 'x',
-                yref: 'y',
-                xshift: -30, // Adjust the position of the annotation along the x-axis
-                yshift: 0, // Adjust the position of the annotation along the y-axis
-                text: '',
-                showarrow: true,
-                arrowhead: 2,
-                arrowcolor: 'red',
-                arrowsize: 2,
-                arrowwidth: 2,
-                arrowhead: 4,
-                ax: 0,
-                ay: -40, // Adjust the position of the arrow tip
-                bordercolor: 'red',
-                borderwidth: 2,
-                borderpad: 4,
-                bgcolor: 'white',
-                opacity: 1,
+                x: lastUserBin + 2, // Adjust x-coordinate of the annotation
+                y: 50, // Adjust y-coordinate of the annotation
+                text: `${names[lastUserIndex]} (${lastUserScore})`,
+                showarrow: false,
                 font: {
-                    family: 'Arial',
-                    size: 12,
-                    color: 'red'
+                    color: 'red',
+                    size: 12
                 }
             };
 
             // Layout configuration
             const layout = {
-                title: 'Test Taker Scores',
+                title: 'Score Distribution and Your Score Highlighted',
                 xaxis: {
-                    title: 'Name'
-                },
-                yaxis: {
                     title: 'Score'
                 },
-                annotations: [annotation] // Add the shape annotation to the plot
+                yaxis: {
+                    title: 'Frequency'
+                },
+                annotations: [annotation] // Add the text annotation to the plot
             };
 
-            // Plot the scatter plot trace
-            Plotly.newPlot('plot', [scatterTrace], layout);
+            // Plot the histogram with the vertical line and text annotation
+            Plotly.newPlot('visualization', [data[0], lineData[0]], layout);
         })
         .catch(error => console.error('Error fetching data:', error));
 }
 
-// Call the function to create the scatter plot when the page loads
-document.addEventListener('DOMContentLoaded', createScatterPlot);
+// Call the function to create the visualization when the page loads
+document.addEventListener('DOMContentLoaded', createVisualization);
