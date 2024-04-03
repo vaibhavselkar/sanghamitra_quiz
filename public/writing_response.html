@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Response Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <style>
+        body {
+            background-color: #6e14dc; 
+            color: #210a0a; /
+        }
+        .container {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container text-center">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">Thank You!</h1>
+            <h2 class="card-text"><span id="username"></span>, your answer has been successfully saved to our database.</h2>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to retrieve query parameter from URL
+    function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // Get the username from the URL
+    const username = getQueryParam('username');
+
+    // Display the username
+    document.getElementById('username').innerText = username;
+</script>
+
+</body>
+</html>
