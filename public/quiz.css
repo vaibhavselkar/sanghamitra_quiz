@@ -4,22 +4,22 @@
 .quiz-page {
     text-align: center;
     margin-top: 50px;
+    background-color: #af7ad5;
   }
   
   /* Styling for the quiz heading */
   .quiz-page h1 {
     padding: 15px 30px;
-  background-color: #007bff;
+  background-color: #551685;
   color: #fff;
   border: none;
   border-radius: 10px;
   font-size: 1.2em;
 }
   
-  
   /* Styling for the quiz subheadings */
   .quiz-page h2 {
-    color: #666;
+    color: #181717;
     font-size: 22px;
     font-weight: normal;
     margin-top: 20px;
@@ -28,7 +28,8 @@
 #questionscontainer {
     margin-top: 20px;
     text-align: left;
-    font-size: 20px;
+    font-size: 25px;
+    font-style: oblique;
 }
 
 
@@ -59,7 +60,7 @@
 }
 
 .option.selected {
-    background-color: #007bff;
+    background-color: #551685;
     color: #fff;
 }
 
@@ -72,7 +73,7 @@
 .previous-button,
 .next-button,
 .submit-button {
-    background-color: blue;
+    background-color: #551685;
     color: #fff;
     border: none;
     padding: 10px 20px;
