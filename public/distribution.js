@@ -1,73 +1,90 @@
-// We can add this visualization on last page.
-// visualization.js
-
-// Function to fetch data and create visualization
-function createVisualization() {
-    // Fetch data from the server
+// Function to update chart based on selected date
+function updateChart() {
+    const selectedDate = document.getElementById('dateDropdown').value;
     fetch('https://my-postgres-server.vercel.app/scores')
-        .then(response => response.json())
-        .then(userData => {
-            // Extract scores and names
-            const scores = userData.map(entry => entry.score);
-            const names = userData.map(entry => entry.name);
-
-            // Create data trace for the histogram
-            const data = [{
-                x: scores,
-                type: 'histogram',
-                name: 'Score Distribution'
-            }];
-
-            // Calculate the bin width for the histogram
-            const binWidth = Math.round((Math.max(...scores) - Math.min(...scores)) / 10);
-
-            // Calculate the bin where the last user's score lies
-            const lastUserIndex = scores.length - 1;
-            const lastUserScore = scores[lastUserIndex];
-            const lastUserBin = Math.floor((lastUserScore - Math.min(...scores)) / binWidth) * binWidth;
-
-            // Create data trace for the vertical line representing the last user's score
-            const lineData = [{
-                x: [lastUserBin, lastUserBin],
-                y: [0, 100], // Adjust y-axis range as needed
-                mode: 'lines',
-                type: 'scatter',
-                name: 'Your Score',
-                line: {
-                    color: 'red',
-                    width: 2
+      .then(response => response.json())
+      .then(data => {
+        // Filter data based on selected date
+        const filteredData = data.filter(entry => new Date(entry.date).toLocaleDateString() === selectedDate);
+        // Extracting user names and scores
+        const usernames = filteredData.map(entry => entry.name);
+        const scores = filteredData.map(entry => parseInt(entry.score));
+  
+        // Highlight the last user
+        const lastUserIndex = scores.length - 1;
+  
+        // Create an array to hold backgroundColor and borderColor
+        const backgroundColors = [];
+        const borderColors = [];
+  
+        // Loop through the scores array to set colors
+        for (let i = 0; i < scores.length; i++) {
+          if (i === lastUserIndex) {
+            backgroundColors.push('rgba(255, 99, 132, 0.5)'); // Highlight last user in red
+            borderColors.push('rgba(255, 99, 132, 1)');
+          } else {
+            backgroundColors.push('rgba(54, 162, 235, 0.5)');
+            borderColors.push('rgba(54, 162, 235, 1)');
+          }
+        }
+  
+        // Get the canvas element
+        const ctx = document.getElementById('quizChart').getContext('2d');
+  
+        // Destroy previous chart instance if it exists
+        if (window.myChart) {
+          window.myChart.destroy();
+        }
+  
+        // Create new chart instance with fixed maximum y-axis scale
+        window.myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: usernames,
+            datasets: [{
+              label: 'Score',
+              data: scores,
+              backgroundColor: backgroundColors,
+              borderColor: borderColors,
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  max: 100 // Set a fixed maximum value for the y-axis scale (e.g., 100)
                 }
-            }];
-
-            // Add text annotation with the name and score of the last user
-            const annotation = {
-                x: lastUserBin + 2, // Adjust x-coordinate of the annotation
-                y: 50, // Adjust y-coordinate of the annotation
-                text: `${names[lastUserIndex]} (${lastUserScore})`,
-                showarrow: false,
-                font: {
-                    color: 'red',
-                    size: 12
-                }
-            };
-
-            // Layout configuration
-            const layout = {
-                title: 'Score Distribution and Your Score Highlighted',
-                xaxis: {
-                    title: 'Score'
-                },
-                yaxis: {
-                    title: 'Frequency'
-                },
-                annotations: [annotation] // Add the text annotation to the plot
-            };
-
-            // Plot the histogram with the vertical line and text annotation
-            Plotly.newPlot('visualization', [data[0], lineData[0]], layout);
-        })
-        .catch(error => console.error('Error fetching data:', error));
-}
-
-// Call the function to create the visualization when the page loads
-document.addEventListener('DOMContentLoaded', createVisualization);
+              }]
+            }
+          }
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
+  
+  // Fetch data from server
+  fetch('https://my-postgres-server.vercel.app/scores')
+    .then(response => response.json())
+    .then(data => {
+      // Extracting unique dates from the data
+      const dates = [...new Set(data.map(entry => new Date(entry.date).toLocaleDateString()))];
+      // Populate dropdown options with dates
+      const dateDropdown = document.getElementById('dateDropdown');
+      // Filter out dates not present in data
+      dates.forEach(date => {
+        const option = document.createElement('option');
+        option.text = date;
+        dateDropdown.add(option);
+      });
+      // Initially update the chart with the first date
+      updateChart();
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
