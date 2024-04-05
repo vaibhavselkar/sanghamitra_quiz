@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phrasal Verbs Quiz</title>
+    <link rel="stylesheet" href="quiz.css">
+    <!-- Bootstrap CSS -->
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body style="background-color: #f2e6fb;">
+    <div class="quiz-page container rounded mt-4 mb-4">
+        <h1>Phrasal Verbs</h1>
+        <h2>The Sanghamitra learning platform is providing an approach towards real learning by accepting the concepts.</h2>
+        <h2>There will be 30 questions in this exam. After entering your name, click anywhere on the page to proceed to the quiz.</h2>
+
+        <!-- Form to input name -->
+        <form id="nameForm">
+            <div class="form-group">
+                <input type="text" class="form-control" id="name-phrasal_verbs" placeholder="Enter Your Name" name="name" required>
+            </div>
+        </form>
+        
+        <!-- Container for questions -->
+        <div id="questionsContainer-phrasal_verbs" style="font-size: 20px;"></div>
+
+        <!-- Submit button -->
+        <button id="submitButton-phrasal_verbs" class="btn btn-primary">Submit</button>
+    </div>
+
+    <!-- JavaScript file -->
+    <script src="phrasal_verbs.js"></script>
+    <!-- Bootstrap JS (optional, only needed for certain components) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Prevent form submission on enter key press
+        document.getElementById("nameForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+        });
+    </script>
+
+</body>
+</html>
