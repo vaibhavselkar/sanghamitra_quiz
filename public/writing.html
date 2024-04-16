@@ -1,123 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Writing</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://getbootstrap.com/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Writing section</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
-    <style>
-        body {
-        background-color: #f2e6fb; /* Light greenish blue background */
-        font-family: Arial, sans-serif; /* Set font family */
-        }
-        .container {
-        max-width: 1300px; /* Limit container width */
-        margin: 80px auto; /* Center container horizontally */
-        padding: 20px; /* Add some padding */
-        background-color: #551685; /* White background for container */
-        border-radius: 10px; /* Add border radius */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
-        color: white;
-        }
-        .form-control {
-        margin-bottom: 25px; /* Add margin between input fields */
-        }
-        .response-textarea {
-        resize: vertical; /* Allow vertical resizing */
-        height: 200px; /* Set minimum height */
-        min-width: 80px;
-        padding: 10px; /* Add padding */
-        border: 1px solid #cb3838; /* Add border */
-        border-radius: 5px; /* Add border radius */
-        font-size: 16px; /* Set font size */
-        line-height: 1.4; /* Set line height */
-        }
-        </style>
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Mentor
+  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+  * Updated: Mar 19 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
+
 <body>
-    
-    <div class="container">
-    <h2>Issue Essay Writing</h2>
-    <div class="form-group">
-        <label for="username">Enter Your name:</label>
-        <input type="text" class="form-control" id="username" placeholder="Name">
-    </div>
 
-    <div class="form-group">
-        <h5>Issue Topic</h5>
-        <p id="promptContainer"></p>
-    </div>
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-    <div class="form-group">
-        <textarea class="form-control response-textarea" id="response" placeholder="Write your response here"></textarea>
-    </div>
-      <button onclick="saveInput()" class="btn btn-primary btn-lg">Submit</button>
-    </div>
-  <script>
-    // Declare a variable to store the random index
-    let randomIndex;
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <img src="img/sbi.logo.png" alt="Logo" width="80" height="80"> 
+        <h1 class="">Sanghamitra Learning</h1>
+      </a>
 
-    // Function to fetch prompts and display them
-    function fetchAndDisplayPrompt() {
-      fetch('https://my-postgres-server.vercel.app/prompts')
-        .then(response => response.json())
-        .then(data => {
-          randomIndex = Math.floor(Math.random() * data.length); // Assign the random index
-          const randomPrompt = data[randomIndex].prompt;
-          
-          const promptElement = document.createElement('p');
-          promptElement.textContent = randomPrompt;
-          
-          // Clear previous prompt before appending new one
-          document.getElementById('promptContainer').innerHTML = '';
-          
-          // Append the random prompt to the prompt container
-          document.getElementById('promptContainer').appendChild(promptElement);
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }
-    
-    // Call fetchAndDisplayPrompt function when the page loads
-    window.onload = fetchAndDisplayPrompt;
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html" class="">Home</a></li>
+          <li><a href="about.html" class="">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
 
-    // Function to save user input
-    function saveInput() {
-        var username = document.getElementById("username").value;
-        var response = document.getElementById("response").value;
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Writing</h1>
+              <p class="mb-0">Welcome to our Writing Mastery Corner, where creativity meets craftsmanship. Whether you're just starting out or honing your skills, our curated resources and engaging exercises are tailored to elevate your writing prowess. Join our vibrant community of writers and embark on a fulfilling journey toward expressing yourself with clarity, flair, and impact.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="breadcrumbs">
+        <div class="container">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Courses</li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <!-- Courses List Section -->
+    <section id="courses-list" class="section courses-list">
+
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+            <div class="course-item">
+              <img src="img/writing (5-7).png" class="img-fluid" alt="...">
+              <div class="course-content">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <a href="diagnostic-writing-1.html"><button class="category">Writing Diagnostic Test (Grades 5-7)</button></a>
+                  
+                </div>
+
+                <p class="description">Explore your writing prowess with our diagnostic test tailored for students in grades 5-7. This writing assessment covers a range of tasks including narrative writing, descriptive writing, persuasive writing, and more. By engaging in this test, you'll have the opportunity to showcase your creativity, organization, and language expression skills, while also receiving valuable feedback to enhance your writing abilities.</p>
+                <div class="trainer d-flex justify-content-between align-items-center">
+                  
+                  <div class="trainer-rank d-flex align-items-center">
+                    
+                    <i class="bi bi-heart heart-icon"></i>&nbsp;83
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End Course Item-->
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+            <div class="course-item">
+              <img src="img/writing (8-10).png" class="img-fluid" alt="...">
+              <div class="course-content">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <a href="diagnostic-writing-2.html"><button class="category">Writing Diagnostic Test (Grades 8-10)</button></a>
+                  
+                </div>
+
+                <p class="description">Elevate your writing skills with our diagnostic test designed specifically for students in grades 8-10. This writing assessment challenges you with more complex writing tasks, such as literary analysis, argumentative essays, research papers, and more. Dive into advanced writing prompts that encourage critical thinking, analytical reasoning, and effective communication. Take this opportunity to refine your writing style and master the art of crafting compelling compositions.</p>
+                <div class="trainer d-flex justify-content-between align-items-center">
+                  
+                  <div class="trainer-rank d-flex align-items-center">
+                    
+                    <i class="bi bi-heart heart-icon"></i>&nbsp;65
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End Course Item-->
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+            <div class="course-item">
+              <img src="img/analytical writing.png" class="img-fluid" alt="...">
+              <div class="course-content">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <a href="writing_gre.html"><button class="category">Analytical Writing</button></a>
+                  
+                </div>
+
+                <p class="description">Elevate your writing prowess with our analytical writing feature, designed to foster critical thinking and articulate expression. Engage in thought-provoking prompts and exercises that challenge you to analyze complex topics, formulate coherent arguments, and present compelling evidence. Develop the skills needed to craft persuasive essays, insightful reflections, and nuanced interpretations. Unleash your analytical prowess and refine your writing craft with our dedicated analytical writing tool.</p>
+                <div class="trainer d-flex justify-content-between align-items-center">
+                  
+                  <div class="trainer-rank d-flex align-items-center">
+                    
+                    <i class="bi bi-heart heart-icon"></i>&nbsp;62
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End Course Item-->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Courses List Section -->
+
+  </main>
+
+  <footer id="footer" class="footer position-relative">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="">Sanghamitra Learning</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>GacchiBowli</p>
+            <p>Hyderabad, TS 500032</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+91 7020102729</span></p>
+            <p><strong>Email:</strong> <span>sanghamitra.learnworlds@gmail.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
         
-        // Use the stored randomIndex for prompt_id
-        const promptId = randomIndex;
 
-        const dataToSend = {
-            "username": username,
-            "prompt_id": promptId, // Use the stored randomIndex
-            "writing_response": response
-        };
-        
-        // Send data to the server
-        fetch('https://my-postgres-server.vercel.app/writing_response', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataToSend)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Data saved successfully:', data);
-            // Redirect to response.html after saving data
-            window.location.href = `writing_response.html?username=${username}`;
-        })
-        .catch(error => {
-            console.error('Error saving data:', error);
-            // Log the error and handle it accordingly
-            window.location.href = `writing_response.html?username=${username}`
-        });
-    }
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+        </div>
 
-  </script>
-   
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1">Sanghamitra Learning</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="index.html">Sanghamitra</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
 </body>
+
 </html>
