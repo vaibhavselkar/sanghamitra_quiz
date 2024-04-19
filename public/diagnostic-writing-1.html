@@ -104,8 +104,10 @@
     <div class="form-group">
         <textarea class="form-control response-textarea" id="response" placeholder="Write your response here"></textarea>
     </div>
-      <button onclick="saveInput()" class="btn btn-primary btn-lg">Submit</button>
+      <button onclick="saveInput()" id="submitBtn" class="btn btn-primary btn-lg">Submit</button>
+      <div id="submitResponse"></div>
     </div>
+    
 
   </main>
 
@@ -209,12 +211,15 @@
         .then(data => {
             console.log('Data saved successfully:', data);
             // Redirect to response.html after saving data
-            window.location.href = `writing_response.html?username=${username}`;
         })
         .catch(error => {
             console.error('Error saving data:', error);
             // Log the error and handle it accordingly
-            window.location.href = `writing_response.html?username=${username}`
+            document.getElementById("username").disabled = true;
+            document.getElementById("response").disabled = true;
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('submitResponse').innerHTML = '<span style="font-size: 24px;">Thank you for your submission, ' + username + '!</span>';
+            document.getElementById('submitResponse').style.display = 'block';
         });
     }
 
