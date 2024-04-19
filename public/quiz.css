@@ -4,13 +4,13 @@
 .quiz-page {
     text-align: center;
     margin-top: 50px;
-    background-color: #af7ad5;
+    background-color: #80d89b;
   }
   
   /* Styling for the quiz heading */
   .quiz-page h1 {
     padding: 15px 30px;
-  background-color: #551685;
+  background-color: #2b9049;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -60,7 +60,7 @@
 }
 
 .option.selected {
-    background-color: #551685;
+    background-color: #2b9049;
     color: #fff;
 }
 
