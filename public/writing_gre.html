@@ -108,6 +108,7 @@
       </div>
       <button onclick="saveInput(event)" id="submitBtn" class="btn btn-primary btn-lg">Submit</button>
       <div id="submitResponse"></div> <!-- Display response here -->
+      <button id="homeBtn" class="btn btn-secondary btn-lg" style="display: none;" onclick="goToHomePage()">Home Page</button>
     </div>
   </main>
 
@@ -150,69 +151,75 @@
     // Declare a variable to store the random index
     let randomIndex;
 
-    // Function to fetch prompts and display them
-    function fetchAndDisplayPrompt() {
-      fetch('https://my-postgres-server.vercel.app/prompts')
-        .then(response => response.json())
-        .then(data => {
-          randomIndex = Math.floor(Math.random() * data.length); // Assign the random index
-          const randomPrompt = data[randomIndex].prompt;
-          const promptElement = document.createElement('p');
-          promptElement.textContent = randomPrompt;
-          // Clear previous prompt before appending new one
-          document.getElementById('promptContainer').innerHTML = '';
-          // Append the random prompt to the prompt container
-          document.getElementById('promptContainer').appendChild(promptElement);
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }
-    
-    // Call fetchAndDisplayPrompt function when the page loads
-    window.onload = fetchAndDisplayPrompt;
-
-    // Function to save user input
-    function saveInput(event) {
-      event.preventDefault();
-      var username = document.getElementById("username").value;
-      var response = document.getElementById("response").value;
-      
-      // Use the stored randomIndex for prompt_id
-      const promptId = randomIndex;
-
-      const dataToSend = {
-          "username": username,
-          "prompt_id": promptId, // Use the stored randomIndex
-          "std": "GRE",
-          "writing_response": response
-      };
-      
-      // Send data to the server
-      fetch('https://my-postgres-server.vercel.app/writing_response', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(dataToSend)
-      })
+  // Function to fetch prompts and display them
+  function fetchAndDisplayPrompt() {
+    fetch('https://my-postgres-server.vercel.app/prompts')
       .then(response => response.json())
       .then(data => {
-          console.log('Data saved successfully:', data);
-          // Display thank you message instead of redirecting
-          document.getElementById('submitBtn').style.display = 'none';
-          document.getElementById('submitResponse').innerHTML = 'Thank you for your submission, ' + username + '!';
-          document.getElementById('submitResponse').style.display = 'block';
+        randomIndex = Math.floor(Math.random() * data.length); // Assign the random index
+        const randomPrompt = data[randomIndex].prompt;
+        const promptElement = document.createElement('p');
+        promptElement.textContent = randomPrompt;
+        // Clear previous prompt before appending new one
+        document.getElementById('promptContainer').innerHTML = '';
+        // Append the random prompt to the prompt container
+        document.getElementById('promptContainer').appendChild(promptElement);
       })
-      .catch(error => {
-          console.error('Error saving data:', error);
-          // Log the error and handle it accordingly
+      .catch(error => console.error('Error fetching data:', error));
+  }
+  
+  // Function to navigate to home page
+  function goToHomePage() {
+    window.location.href = "index.html"; // Replace "index.html" with your home page URL
+  }
+  
+  // Call fetchAndDisplayPrompt function when the page loads
+  window.onload = fetchAndDisplayPrompt;
 
+  // Function to save user input
+  function saveInput(event) {
+    event.preventDefault();
+    var username = document.getElementById("username").value;
+    var response = document.getElementById("response").value;
+    
+    // Use the stored randomIndex for prompt_id
+    const promptId = randomIndex;
 
-          document.getElementById("username").disabled = true;
-          document.getElementById("response").disabled = true;
-          document.getElementById('submitBtn').style.display = 'none';
-          document.getElementById('submitResponse').innerHTML = '<span style="font-size: 24px;">Thank you for your submission, ' + username + '!</span>';
-          document.getElementById('submitResponse').style.display = 'block';
-      });
+    const dataToSend = {
+        "username": username,
+        "prompt_id": promptId, // Use the stored randomIndex
+        "std": "GRE",
+        "writing_response": response
+    };
+    
+    // Send data to the server
+    fetch('https://my-postgres-server.vercel.app/writing_response', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Data saved successfully:', data);
+        // Display thank you message instead of redirecting
+        document.getElementById('submitBtn').style.display = 'none';
+        document.getElementById('submitResponse').innerHTML = 'Thank you for your submission, ' + username + '!';
+        document.getElementById('submitResponse').style.display = 'block';
+        document.getElementById('homeBtn').style.display = 'inline-block';
+    })
+    .catch(error => {
+        console.error('Error saving data:', error);
+        // Log the error and handle it accordingly
+
+        document.getElementById("username").disabled = true;
+        document.getElementById("response").disabled = true;
+        document.getElementById('submitBtn').style.display = 'none';
+        document.getElementById('submitResponse').innerHTML = '<span style="font-size: 24px;">Thank you for your submission, ' + username + '!</span>';
+        document.getElementById('submitResponse').style.display = 'block';
+        document.getElementById('homeBtn').style.display = 'inline-block';
+    });
     }
   </script>
 
