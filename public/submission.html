@@ -13,21 +13,21 @@
             text-align: center;
             font-size: 24px;
             margin-top: 50px;
-            background-color: #551685;
+            background-color: #2b9049;
             padding: 20px;
             border-radius: 10px;
             color: white;
         }
-        }
+        
     </style>
 </head>
 <body style="background-color: #f8e9fb;">
     <div class="container">
         <div class="score-container">
             <h1>Congratulations!</h1>
-            <p id="score"></p>
             <p>Thank you for taking the quiz!</p>
         </div>
+
         <h1>The visualization of your score along with other users.</h1>
     <!-- Dropdown menu for selecting dates -->
     <label for="dateDropdown">Choose a date:</label>
@@ -40,7 +40,9 @@
         <canvas id="quizChart" width="800" height="400"></canvas>
     </div>
     <script src="distribution.js"></script>
+    <button onclick="goToHomePage()" class="btn btn-primary mt-3">Home Page</button> <!-- Added Home Page button -->
     </div>
+            
 
 
 
@@ -54,12 +56,11 @@
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
         }
-        
-        // Retrieve score and name from URL
-        const score = getParameterByName('score');
-        // Display score and name
-        const scoreContainer = document.getElementById('score');
-        scoreContainer.textContent = `You scored ${score}%!`;
+
+        // Function to navigate to the home page
+        function goToHomePage() {
+            window.location.href = 'index.html'; // Replace 'index.html' with your actual home page URL
+        }
     </script>
 
     
