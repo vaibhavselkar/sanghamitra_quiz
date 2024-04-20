@@ -64,10 +64,30 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Add a new button for feedback
         const feedbackLink = document.createElement('a');
-        feedbackLink.textContent = 'Feedback To Develop';
+        feedbackLink.textContent = 'Click To Provide Feedback';
         feedbackLink.href = 'https://docs.google.com/document/d/16TgneItEErdDl9JA-YVOpMRibAsxgB-Wn4JtbU242H4/edit'; // Add your feedback link here
         feedbackLink.classList.add('btn', 'btn-primary');
+        feedbackLink.target = '_blank';
         submitButton.parentNode.appendChild(feedbackLink);
+
+        // Add a button for statistics
+        const statisticsButton = document.createElement('button');
+        statisticsButton.textContent = 'View Statistics';
+        statisticsButton.classList.add('btn', 'btn-primary', 'mx-2');
+        statisticsButton.onclick = function() {
+            window.location.href = 'submission.html'; // Replace 'statistics.html' with your actual statistics page URL
+        };
+        submitButton.parentNode.appendChild(statisticsButton);
+        
+        // Add a button for home page
+        const homeButton = document.createElement('button');
+        homeButton.textContent = 'Home';
+        homeButton.classList.add('btn', 'btn-primary');
+        homeButton.onclick = function() {
+            window.location.href = 'english.html'; // Replace 'index.html' with your actual home page URL
+        };
+        submitButton.parentNode.appendChild(homeButton);
+
         });
 
     // Function to select option for each question
@@ -101,14 +121,14 @@ document.addEventListener("DOMContentLoaded", function() {
         let reviewMessage = '';
         let scorePercentage = Math.round(score * 100) / 100; // Calculate score percentage
         if (score >= 70) {
-            reviewMessage = 'Congratulations! You passed the quiz.';
+            reviewMessage = `Congratulations! You Have Scored ${scorePercentage}%.`;
         } else {
-            reviewMessage = 'Sorry, you did not pass the quiz. Please review your answers below.';
+            reviewMessage = `Congratulations! You Have Scored ${scorePercentage}%.`;
         }
     
         let reviewHTML = `
-            <h2>${reviewMessage}</h2>
-            <p>Your Score: ${scorePercentage}%</p>
+            <h1>${reviewMessage}</h1>
+            <h2> Please review your answers below. Correct answers are highlighted in green, while incorrect answers are highlighted in red. </h2>
             <ul>
         `;
         questions.forEach((question, index) => {
