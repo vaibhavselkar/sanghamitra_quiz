@@ -69,7 +69,7 @@ function updateChart() {
   }
   
   // Fetch data from server
-  fetch('https://my-postgres-server.vercel.app/scores')
+    fetch('https://my-postgres-server.vercel.app/scores')
     .then(response => response.json())
     .then(data => {
       // Extracting unique dates from the data
@@ -82,9 +82,12 @@ function updateChart() {
         option.text = date;
         dateDropdown.add(option);
       });
-      // Initially update the chart with the first date
+      // Initially update the chart with the most recent date
+      const mostRecentDate = dates[dates.length - 1];
+      dateDropdown.value = mostRecentDate;
       updateChart();
     })
     .catch(error => {
       console.error('Error fetching data:', error);
-    });
+  });
+
