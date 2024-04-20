@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Add a new button for feedback
         const feedbackLink = document.createElement('a');
         feedbackLink.textContent = 'Click To Provide Feedback';
-        feedbackLink.href = 'https://docs.google.com/document/d/16TgneItEErdDl9JA-YVOpMRibAsxgB-Wn4JtbU242H4/edit'; // Add your feedback link here
+        feedbackLink.href = 'https://forms.gle/VmWRLfKCfR4MnnRp7'; // Add your feedback link here
         feedbackLink.classList.add('btn', 'btn-primary');
         feedbackLink.target = '_blank';
         submitButton.parentNode.appendChild(feedbackLink);
