@@ -39,16 +39,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to start the timer
     function startTimer() {
-        timerInterval = setInterval(() => {
-            timeElapsed++;
-            displayTime(); // Update the timer display every second
-        }, 1000);
+        startTime = Date.now(); // Record the start time
+        timerInterval = setInterval(displayTime, 1000); // Update the timer display every second
     }
-
+    
     // Function to display the timer
     function displayTime() {
-        const minutes = Math.floor(timeElapsed / 60);
-        const seconds = timeElapsed % 60;
+        const currentTime = Date.now(); // Get the current time
+        const elapsedTime = Math.floor((currentTime - startTime) / 1000); // Calculate elapsed time in seconds
+        const minutes = Math.floor(elapsedTime / 60);
+        const seconds = elapsedTime % 60;
         timerDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
