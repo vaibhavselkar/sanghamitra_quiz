@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    console.log('math_diagnostic.js script loaded');
+    console.log('diagnostic.js script loaded');
 
     const questionsContainer = document.getElementById('questionsContainer-english');
     const submitButton = document.getElementById('submitButton-english');
@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.log('Questions fetched:', data);
                 questions = data;
                 displayQuestions();
-                startTimer(); // Start the timer when questions are fetched
             })
             .catch(error => {
                 console.error('Error fetching questions:', error);
@@ -56,11 +55,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Function to enable or disable submit button based on name input
-    function toggleSubmitButton() {
-        submitButton.disabled = !nameInput.value.trim(); // Disable if name input is empty or contains only whitespace
-    }
-
     // Function to select option for each question
     function selectOption(event) {
         const index = event.target.dataset.index;
@@ -85,6 +79,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const minutes = Math.floor(elapsedTime / 60);
         const seconds = elapsedTime % 60;
         timerDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        // Update the timeElapsed variable
+        timeElapsed = elapsedTime;
     }
 
     // Function to stop the timer
@@ -92,17 +89,60 @@ document.addEventListener("DOMContentLoaded", function() {
         clearInterval(timerInterval);
     }
 
+    // Function to enable or disable submit button based on name input
+    function toggleSubmitButton() {
+        submitButton.disabled = !nameInput.value.trim(); // Disable if name input is empty or contains only whitespace
+    }
+
+    submitButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent form submission
+        stopTimer(); // Stop the timer when the quiz is submitted
+        const score = calculateScore(); // Calculate the score
+        displayReview(score); // Display review based on the score
+        submitForm(nameInput, score); // Submit the form
+        
+        // Remove the submit button
+        submitButton.style.display = 'none';
+        
+        // Add a new button for feedback
+        const feedbackLink = document.createElement('a');
+        feedbackLink.textContent = 'Click To Provide Feedback';
+        feedbackLink.href = 'https://forms.gle/VmWRLfKCfR4MnnRp7'; // Add your feedback link here
+        feedbackLink.classList.add('btn', 'btn-primary');
+        feedbackLink.target = '_blank';
+        submitButton.parentNode.appendChild(feedbackLink);
+
+        // Add a button for statistics
+        const statisticsButton = document.createElement('button');
+        statisticsButton.textContent = 'View Statistics';
+        statisticsButton.classList.add('btn', 'btn-primary', 'mx-2');
+        statisticsButton.onclick = function() {
+            window.location.href = 'submission.html'; // Replace 'statistics.html' with your actual statistics page URL
+        };
+        submitButton.parentNode.appendChild(statisticsButton);
+        
+        // Add a button for home page
+        const homeButton = document.createElement('button');
+        homeButton.textContent = 'Home';
+        homeButton.classList.add('btn', 'btn-primary');
+        homeButton.onclick = function() {
+            window.location.href = 'math.html'; // Replace 'index.html' with your actual home page URL
+        };
+        submitButton.parentNode.appendChild(homeButton);
+
+    });
+
     // Function to calculate score
     function calculateScore() {
         let score = 0;
         const totalQuestions = questions.length;
-
+    
         for (let i = 0; i < totalQuestions; i++) {
             if (selectedOptions[i] === questions[i].correct_option) {
                 score++;
             }
         }
-
+    
         score = (score / totalQuestions) * 100; // Calculate the percentage
         return score; // Return the score as a percentage
     }
@@ -116,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             reviewMessage = `Congratulations! You Have Scored ${scorePercentage}%.`;
         }
-
+    
         let reviewHTML = `
             <h1>${reviewMessage}</h1>
             <h2> Please review your answers below. Correct answers are highlighted in green, while incorrect answers are highlighted in red. </h2>
@@ -125,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function() {
         questions.forEach((question, index) => {
             let selectedOption = selectedOptions[index];
             let correctOption = question.correct_option;
-
+    
             reviewHTML += `<li>${index + 1}. ${question.question}<br>`;
             ['a', 'b', 'c', 'd'].forEach((option) => {
                 if (selectedOption === option && selectedOption !== correctOption) {
@@ -145,13 +185,10 @@ document.addEventListener("DOMContentLoaded", function() {
             reviewHTML += `</li><br>`;
         });
         reviewHTML += '</ul>';
-
+    
         questionsContainer.innerHTML = reviewHTML;
-
-        stopTimer();
     }
-
-    // Function to submit the form
+    
     function submitForm(nameInput, score) {
         fetch('https://my-postgres-server.vercel.app/data', {
             method: 'POST',
@@ -180,44 +217,6 @@ document.addEventListener("DOMContentLoaded", function() {
     nameInput.addEventListener('input', (event) => {
         name = event.target.value; // Update name variable when input changes
         toggleSubmitButton(); // Enable or disable submit button based on name input
-    });
-
-    // Event listener for submit button
-    submitButton.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent form submission
-        stopTimer(); // Stop the timer when the quiz is submitted
-        const score = calculateScore(); // Calculate the score
-        displayReview(score); // Display review based on the score
-        submitForm(nameInput, score); // Submit the form
-
-        // Remove the submit button
-        submitButton.style.display = 'none';
-
-        // Add a new button for feedback
-        const feedbackLink = document.createElement('a');
-        feedbackLink.textContent = 'Click To Provide Feedback';
-        feedbackLink.href = 'https://forms.gle/VmWRLfKCfR4MnnRp7'; // Add your feedback link here
-        feedbackLink.classList.add('btn', 'btn-primary');
-        feedbackLink.target = '_blank';
-        submitButton.parentNode.appendChild(feedbackLink);
-
-        // Add a button for statistics
-        const statisticsButton = document.createElement('button');
-        statisticsButton.textContent = 'View Statistics';
-        statisticsButton.classList.add('btn', 'btn-primary', 'mx-2');
-        statisticsButton.onclick = function() {
-            window.location.href = 'submission.html'; // Replace 'statistics.html' with your actual statistics page URL
-        };
-        submitButton.parentNode.appendChild(statisticsButton);
-
-        // Add a button for home page
-        const homeButton = document.createElement('button');
-        homeButton.textContent = 'Home';
-        homeButton.classList.add('btn', 'btn-primary');
-        homeButton.onclick = function() {
-            window.location.href = 'math.html'; // Replace 'index.html' with your actual home page URL
-        };
-        submitButton.parentNode.appendChild(homeButton);
     });
 
     // Initial setup: Fetch questions and start the timer
