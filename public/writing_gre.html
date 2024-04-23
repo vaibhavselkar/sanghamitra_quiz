@@ -94,17 +94,20 @@
     <div class="main-content">
       <h2>Analytical Writing (GRE)</h2>
       <div class="form-group">
-        <label for="username">Enter Your name:</label>
-        <input type="text" class="form-control" id="username" placeholder="Name">
+        <input type="text" class="form-control" id="username" placeholder="Please Enter Your Name">
       </div>
 
       <div class="form-group">
-        <h5>Topic</h5>
-        <p id="promptContainer"></p>
+        <h4>Topic</h4>
+        <h5 id="promptContainer"></h5>
+        <div class="d-flex justify-content-end">
+          <div id="timerDisplay" class="shadow p-3 mb-5 bg-body-tertiary rounded" style="color: black;">Time: 00:00</div>
+      </div>
       </div>
 
       <div class="form-group">
-        <textarea class="form-control response-textarea" id="response" placeholder="Write your response here"></textarea>
+        <textarea class="form-control response-textarea" id="response" placeholder="Write your response here" oninput="countWords()"></textarea>
+        <h5 id="wordCount">Word count: 0</h5>
       </div>
       <button onclick="saveInput(event)" id="submitBtn" class="btn btn-primary btn-lg">Submit</button>
       <div id="submitResponse"></div> <!-- Display response here -->
@@ -150,6 +153,8 @@
   <script>
     // Declare a variable to store the random index
     let randomIndex;
+    let timerInterval;
+    let timeElapsed = 0;
 
   // Function to fetch prompts and display them
   function fetchAndDisplayPrompt() {
@@ -167,29 +172,73 @@
       })
       .catch(error => console.error('Error fetching data:', error));
   }
+    // Function to start the timer
+    function startTimer() {
+    timerInterval = setInterval(() => {
+      timeElapsed++;
+      displayTime();
+    }, 1000);
+  }
+  function resetInputs() {
+  document.getElementById("username").value = "";
+  document.getElementById("response").value = "";
+  document.getElementById("wordCount").textContent = "Word count: 0";
+}
+
+  // Function to display the time
+  function displayTime() {
+    const minutes = Math.floor(timeElapsed / 60);
+    const seconds = timeElapsed % 60;
+    document.getElementById('timerDisplay').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  function countWords() {
+    const responseText = document.getElementById("response").value;
+    const wordCount = responseText.split(/\s+/).filter(word => word.length > 0).length;
+    document.getElementById("wordCount").textContent = `Word count: ${wordCount}`;
+    
+    // Enable or disable the submit button based on word count
+    const submitBtn = document.getElementById("submitBtn");
+    if (wordCount >= 200) {
+      submitBtn.removeAttribute("disabled");
+    } else {
+      submitBtn.setAttribute("disabled", "true");
+    }
+  }
   
   // Function to navigate to home page
   function goToHomePage() {
+    resetInputs();
     window.location.href = "index.html"; // Replace "index.html" with your home page URL
   }
   
   // Call fetchAndDisplayPrompt function when the page loads
-  window.onload = fetchAndDisplayPrompt;
+  window.onload = function() {
+    startTimer();
+    fetchAndDisplayPrompt();
+  };
+
 
   // Function to save user input
   function saveInput(event) {
     event.preventDefault();
     var username = document.getElementById("username").value;
     var response = document.getElementById("response").value;
-    
+    const timeInSeconds = timeElapsed;
     // Use the stored randomIndex for prompt_id
     const promptId = randomIndex;
+
+    if (!username.trim()) {
+        alert('Please enter your name.');
+        return;
+    }
 
     const dataToSend = {
         "username": username,
         "prompt_id": promptId, // Use the stored randomIndex
         "std": "GRE",
-        "writing_response": response
+        "writing_response": response,
+        "time": timeInSeconds
     };
     
     // Send data to the server
@@ -212,7 +261,7 @@
     .catch(error => {
         console.error('Error saving data:', error);
         // Log the error and handle it accordingly
-
+        clearInterval(timerInterval);
         document.getElementById("username").disabled = true;
         document.getElementById("response").disabled = true;
         document.getElementById('submitBtn').style.display = 'none';
