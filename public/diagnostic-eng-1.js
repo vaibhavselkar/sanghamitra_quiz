@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    console.log('english_q1.js script loaded');
+    console.log('diagnostic.js script loaded');
 
     const questionsContainer = document.getElementById('questionsContainer-english');
     const submitButton = document.getElementById('submitButton-english');
@@ -20,13 +20,42 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.log('Questions fetched:', data);
                 questions = data;
                 displayQuestions();
-                startTimer(); // Start the timer when questions are fetched
             })
             .catch(error => {
                 console.error('Error fetching questions:', error);
             });
     }
 
+    // Function to display the questions
+    function displayQuestions() {
+        console.log('Displaying questions...');
+        console.log('Questions:', questions);
+        questionsContainer.innerHTML = ''; // Clear previous questions
+
+        questions.forEach((question, index) => {
+            const questionElement = document.createElement('div');
+            questionElement.classList.add('question');
+            questionElement.innerHTML = `
+                <div>
+                    <p>${index + 1}. ${question.question}</p>
+                    <div class="options">
+                        <button class="option" data-index="${index}" data-option="a">a. ${question.option_a}</button>
+                        <button class="option" data-index="${index}" data-option="b">b. ${question.option_b}</button>
+                        <button class="option" data-index="${index}" data-option="c">c. ${question.option_c}</button>
+                        <button class="option" data-index="${index}" data-option="d">d. ${question.option_d}</button>
+                    </div>
+                </div>
+            `;
+            questionsContainer.appendChild(questionElement);
+        });
+
+        // Add event listeners to options
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', selectOption);
+        });
+    }
+
+    // Function to select option for each question
     function selectOption(event) {
         const index = event.target.dataset.index;
         const option = event.target.dataset.option;
@@ -60,34 +89,48 @@ document.addEventListener("DOMContentLoaded", function() {
         clearInterval(timerInterval);
     }
 
-    // Function to display questions
-    function displayQuestions() {
-        console.log('Displaying questions...');
-        console.log('Questions:', questions);
-        questionsContainer.innerHTML = ''; // Clear previous questions
-
-        questions.forEach((question, index) => {
-            const questionElement = document.createElement('div');
-            questionElement.classList.add('question');
-            questionElement.innerHTML = `
-                <div>
-                    <p>${index + 1}. ${question.question}</p>
-                    <div class="options">
-                        <button class="option" data-index="${index}" data-option="a">a. ${question.option_a}</button>
-                        <button class="option" data-index="${index}" data-option="b">b. ${question.option_b}</button>
-                        <button class="option" data-index="${index}" data-option="c">c. ${question.option_c}</button>
-                        <button class="option" data-index="${index}" data-option="d">d. ${question.option_d}</button>
-                    </div>
-                </div>
-            `;
-            questionsContainer.appendChild(questionElement);
-        });
-
-        // Add event listeners to options
-        document.querySelectorAll('.option').forEach(option => {
-            option.addEventListener('click', selectOption);
-        });
+    // Function to enable or disable submit button based on name input
+    function toggleSubmitButton() {
+        submitButton.disabled = !nameInput.value.trim(); // Disable if name input is empty or contains only whitespace
     }
+
+    submitButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent form submission
+        stopTimer(); // Stop the timer when the quiz is submitted
+        const score = calculateScore(); // Calculate the score
+        displayReview(score); // Display review based on the score
+        submitForm(nameInput, score); // Submit the form
+        
+        // Remove the submit button
+        submitButton.style.display = 'none';
+        
+        // Add a new button for feedback
+        const feedbackLink = document.createElement('a');
+        feedbackLink.textContent = 'Click To Provide Feedback';
+        feedbackLink.href = 'https://forms.gle/VmWRLfKCfR4MnnRp7'; // Add your feedback link here
+        feedbackLink.classList.add('btn', 'btn-primary');
+        feedbackLink.target = '_blank';
+        submitButton.parentNode.appendChild(feedbackLink);
+
+        // Add a button for statistics
+        const statisticsButton = document.createElement('button');
+        statisticsButton.textContent = 'View Statistics';
+        statisticsButton.classList.add('btn', 'btn-primary', 'mx-2');
+        statisticsButton.onclick = function() {
+            window.location.href = 'submission.html'; // Replace 'statistics.html' with your actual statistics page URL
+        };
+        submitButton.parentNode.appendChild(statisticsButton);
+        
+        // Add a button for home page
+        const homeButton = document.createElement('button');
+        homeButton.textContent = 'Home';
+        homeButton.classList.add('btn', 'btn-primary');
+        homeButton.onclick = function() {
+            window.location.href = 'english.html'; // Replace 'index.html' with your actual home page URL
+        };
+        submitButton.parentNode.appendChild(homeButton);
+
+    });
 
     // Function to calculate score
     function calculateScore() {
@@ -104,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return score; // Return the score as a percentage
     }
 
-    // Function to display review
+    // Function to display review based on the score
     function displayReview(score) {
         let reviewMessage = '';
         let scorePercentage = Math.round(score * 100) / 100; // Calculate score percentage
@@ -145,8 +188,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
         questionsContainer.innerHTML = reviewHTML;
     }
-
-    // Function to submit the form
+    
     function submitForm(nameInput, score) {
         fetch('https://my-postgres-server.vercel.app/data', {
             method: 'POST',
@@ -171,59 +213,16 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    function toggleSubmitButton() {
-        submitButton.disabled = !nameInput.value.trim(); // Disable if name input is empty or contains only whitespace
-    }
-
-    // Event listener for submit button
-    submitButton.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent form submission
-        stopTimer(); // Stop the timer when the quiz is submitted
-        const score = calculateScore(); // Calculate the score
-        displayReview(score); // Display review based on the score
-        submitForm(nameInput, score); // Submit the form
-        
-        // Remove the submit button and display time
-        submitButton.style.display = 'none';
-        
-    // Add a new button for feedback
-        const feedbackLink = document.createElement('a');
-        feedbackLink.textContent = 'Click To Provide Feedback';
-        feedbackLink.href = 'https://forms.gle/VmWRLfKCfR4MnnRp7'; // Add your feedback link here
-        feedbackLink.classList.add('btn', 'btn-primary');
-        feedbackLink.target = '_blank';
-        submitButton.parentNode.appendChild(feedbackLink);
-
-        // Add a button for statistics
-        const statisticsButton = document.createElement('button');
-        statisticsButton.textContent = 'View Statistics';
-        statisticsButton.classList.add('btn', 'btn-primary', 'mx-2');
-        statisticsButton.onclick = function() {
-            window.location.href = 'submission.html'; // Replace 'statistics.html' with your actual statistics page URL
-        };
-        submitButton.parentNode.appendChild(statisticsButton);
-
-        // Add a button for home page
-        const homeButton = document.createElement('button');
-        homeButton.textContent = 'Home';
-        homeButton.classList.add('btn', 'btn-primary');
-        homeButton.onclick = function() {
-            window.location.href = 'math.html'; // Replace 'index.html' with your actual home page URL
-        };
-        submitButton.parentNode.appendChild(homeButton);
-    });
-
-    // Initial setup: Fetch questions and start the timer
-    fetchQuestions();
-
+    // Event listener for name input
     nameInput.addEventListener('input', (event) => {
         name = event.target.value; // Update name variable when input changes
         toggleSubmitButton(); // Enable or disable submit button based on name input
     });
 
+    // Initial setup: Fetch questions and start the timer
+    fetchQuestions();
+    startTimer(); // Start the timer as soon as the page is loaded
+
     // Initial state: Disable submit button until name input is filled
     toggleSubmitButton();
-
-    // Start the timer as soon as the page is loaded
-    startTimer();
 });
