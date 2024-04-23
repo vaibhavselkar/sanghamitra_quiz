@@ -147,6 +147,8 @@ document.addEventListener("DOMContentLoaded", function() {
         reviewHTML += '</ul>';
 
         questionsContainer.innerHTML = reviewHTML;
+
+        stopTimer();
     }
 
     // Function to submit the form
