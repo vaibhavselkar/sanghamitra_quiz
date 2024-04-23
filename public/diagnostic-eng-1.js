@@ -185,7 +185,32 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Remove the submit button and display time
         submitButton.style.display = 'none';
-        timerDisplay.style.display = 'none'; // Hide the timer after submission
+        
+    // Add a new button for feedback
+        const feedbackLink = document.createElement('a');
+        feedbackLink.textContent = 'Click To Provide Feedback';
+        feedbackLink.href = 'https://forms.gle/VmWRLfKCfR4MnnRp7'; // Add your feedback link here
+        feedbackLink.classList.add('btn', 'btn-primary');
+        feedbackLink.target = '_blank';
+        submitButton.parentNode.appendChild(feedbackLink);
+
+        // Add a button for statistics
+        const statisticsButton = document.createElement('button');
+        statisticsButton.textContent = 'View Statistics';
+        statisticsButton.classList.add('btn', 'btn-primary', 'mx-2');
+        statisticsButton.onclick = function() {
+            window.location.href = 'submission.html'; // Replace 'statistics.html' with your actual statistics page URL
+        };
+        submitButton.parentNode.appendChild(statisticsButton);
+
+        // Add a button for home page
+        const homeButton = document.createElement('button');
+        homeButton.textContent = 'Home';
+        homeButton.classList.add('btn', 'btn-primary');
+        homeButton.onclick = function() {
+            window.location.href = 'math.html'; // Replace 'index.html' with your actual home page URL
+        };
+        submitButton.parentNode.appendChild(homeButton);
     });
 
     // Initial setup: Fetch questions and start the timer
