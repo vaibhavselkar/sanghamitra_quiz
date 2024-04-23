@@ -50,6 +50,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const minutes = Math.floor(elapsedTime / 60);
         const seconds = elapsedTime % 60;
         timerDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        // Update the timeElapsed variable
+        timeElapsed = elapsedTime;
     }
 
     // Function to stop the timer
