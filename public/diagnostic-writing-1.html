@@ -4,232 +4,245 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Writing Section</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://getbootstrap.com/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://getbootstrap.com/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
-      <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="assets/vendor/aos/aos.css" rel="stylesheet">
+<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
-    <style>
-      body {
-          background-color: #ffffff;
-          /* Light greenish blue background */
-          font-family: Arial, sans-serif;
-          /* Set font family */
-      }
+<!-- Main CSS File -->
+<link href="assets/css/main.css" rel="stylesheet">
+ <style>
+    body {
+      background-color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
 
-      .main-content {
-          max-width: 1300px;
-          /* Limit container width */
-          margin: 80px auto;
-          /* Center container horizontally */
-          padding: 20px;
-          /* Add some padding */
-          background-color: #5fcf80;
-          /* White background for container */
-          border-radius: 10px;
-          /* Add border radius */
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          /* Add box shadow */
-          color: white;
-      }
+    .main-content {
+      max-width: 1300px;
+      margin: 80px auto;
+      padding: 20px;
+      background-color: #5fcf80;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      color: white;
+    }
 
-      .form-control {
-          margin-bottom: 25px;
-          /* Add margin between input fields */
-      }
+    .form-control {
+      margin-bottom: 25px;
+    }
 
-      .response-textarea {
-          resize: vertical;
-          /* Allow vertical resizing */
-          height: 200px;
-          /* Set minimum height */
-          min-width: 80px;
-          padding: 10px;
-          /* Add padding */
-          border-radius: 5px;
-          /* Add border radius */
-          font-size: 16px;
-          /* Set font size */
-          line-height: 1.4;
-          /* Set line height */
-      }
+    .response-textarea {
+      resize: vertical;
+      height: 200px;
+      min-width: 80px;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
 
-  
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <img src="img/sbi.logo.png" alt="Logo" width="80" height="80"> 
+      <h1 class="">Sanghamitra Learning</h1>
+    </a>
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html" class="">Home</a></li>
+        <li><a href="about.html" class="">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+  </div>
+</header>
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="img/sbi.logo.png" alt="Logo" width="80" height="80"> 
-        <h1 class="">Sanghamitra Learning</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html" class="">Home</a></li>
-          <li><a href="about.html" class="">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
-    </div>
-  </header>
-
-  <main class="main">
-    
-    <div class="main-content">
+<main class="main">
+  <div class="main-content">
     <h2>Analytical Writing Class (5-7)</h2>
     <div class="form-group">
-        <label for="username">Enter Your name:</label>
-        <input type="text" class="form-control" id="username" placeholder="Name">
+      <input type="text" class="form-control" id="username" placeholder="Please Enter Your Name">
+      
     </div>
 
     <div class="form-group">
-        <h5>Topic</h5>
-        <p id="promptContainer"></p>
+      <h4>Topic</h4>
+      <h5 id="promptContainer"></h5>
+      <div class="d-flex justify-content-end">
+        <div id="timerDisplay" class="shadow p-3 mb-5 bg-body-tertiary rounded" style="color: black;">Time: 00:00</div>
+    </div>
     </div>
 
     <div class="form-group">
-        <textarea class="form-control response-textarea" id="response" placeholder="Write your response here"></textarea>
+      <textarea class="form-control response-textarea" id="response" placeholder="Write your response here" oninput="countWords()"></textarea>
+        <h5 id="wordCount">Word count: 0</h5>
     </div>
-      <button onclick="saveInput()" id="submitBtn" class="btn btn-primary btn-lg">Submit</button>
-      <div id="submitResponse"></div>
-      <button id="homeBtn" class="btn btn-secondary btn-lg" style="display: none;" onclick="goToHomePage()">Home Page</button>
-    </div>
-    
 
-  </main>
+    <button onclick="saveInput()" id="submitBtn" class="btn btn-primary btn-lg">Submit</button>
+    <div id="submitResponse"></div>
+    <button id="homeBtn" class="btn btn-secondary btn-lg" style="display: none;" onclick="goToHomePage()">Home Page</button>
+  </div>
+</main>
 
-  <footer id="footer" class="footer position-relative">
-
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="">Sanghamitra Learning</span>
-          </a>
-          <div class="footer-contact pt-3">
-            <p>GacchiBowli</p>
-            <p>Hyderabad, TS 500032</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+91 7020102729</span></p>
-            <p><strong>Email:</strong> <span>sanghamitra.learnworlds@gmail.com</span></p>
-          </div>
-          <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
+<footer id="footer" class="footer position-relative">
+  <div class="container footer-top">
+    <div class="row gy-4">
+      <div class="col-lg-4 col-md-6 footer-about">
+        <a href="index.html" class="logo d-flex align-items-center">
+          <span class="">Sanghamitra Learning</span>
+        </a>
+        <div class="footer-contact pt-3">
+          <p>GacchiBowli</p>
+          <p>Hyderabad, TS 500032</p>
+          <p class="mt-3"><strong>Phone:</strong> <span>+91 7020102729</span></p>
+          <p><strong>Email:</strong> <span>sanghamitra.learnworlds@gmail.com</span></p>
         </div>
-
-        
-
-        <div class="col-lg-4 col-md-12 footer-newsletter">
-          
+        <div class="social-links d-flex mt-4">
+          <a href=""><i class="bi bi-twitter"></i></a>
+          <a href=""><i class="bi bi-facebook"></i></a>
+          <a href=""><i class="bi bi-instagram"></i></a>
+          <a href=""><i class="bi bi-linkedin"></i></a>
         </div>
-
+      </div>
+      <div class="col-lg-4 col-md-12 footer-newsletter">
       </div>
     </div>
-
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1">Sanghamitra Learning</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="index.html">Sanghamitra</a>
-      </div>
+  </div>
+  <div class="container copyright text-center mt-4">
+    <p>© <span>Copyright</span> <strong class="px-1">Sanghamitra Learning</strong> <span>All Rights Reserved</span></p>
+    <div class="credits">
+      Designed by <a href="index.html">Sanghamitra</a>
     </div>
+  </div>
+</footer>
 
-  </footer>
+<script>
+  let timerInterval;
+  let timeElapsed = 0;
 
+  // Function to start the timer when the page is loaded
+  window.onload = function() {
+    startTimer();
+    fetchAndDisplayPrompt();
+  };
 
+  // Function to start the timer
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      timeElapsed++;
+      displayTime();
+    }, 1000);
+  }
 
-  <script>
-    // Declare a variable to store the random index
-    let randomIndex;
+  // Function to display the time
+  function displayTime() {
+    const minutes = Math.floor(timeElapsed / 60);
+    const seconds = timeElapsed % 60;
+    document.getElementById('timerDisplay').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
 
-    // Function to fetch prompts and display them
-    function fetchAndDisplayPrompt() {
-      fetch('https://my-postgres-server.vercel.app/prompts-diagnos-1')
-        .then(response => response.json())
-        .then(data => {
-          randomIndex = Math.floor(Math.random() * data.length); // Assign the random index
-          const randomPrompt = data[randomIndex].prompt;
-          
-          const promptElement = document.createElement('p');
-          promptElement.textContent = randomPrompt;
-          
-          // Clear previous prompt before appending new one
-          document.getElementById('promptContainer').innerHTML = '';
-          
-          // Append the random prompt to the prompt container
-          document.getElementById('promptContainer').appendChild(promptElement);
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }
+  function countWords() {
+    const responseText = document.getElementById("response").value;
+    const wordCount = responseText.split(/\s+/).filter(word => word.length > 0).length;
+    document.getElementById("wordCount").textContent = `Word count: ${wordCount}`;
     
-    function goToHomePage() {
-      window.location.href = "index.html"; // Replace "index.html" with your home page URL
+    // Enable or disable the submit button based on word count
+    const submitBtn = document.getElementById("submitBtn");
+    if (wordCount >= 50) {
+      submitBtn.removeAttribute("disabled");
+    } else {
+      submitBtn.setAttribute("disabled", "true");
+    }
+  }
+
+  // Function to handle clicking the Home Page button
+  function goToHomePage() {
+    // Clear input fields and hide submit response message
+    document.getElementById("username").value = "";
+    document.getElementById("response").value = "";
+    document.getElementById('submitResponse').style.display = 'none';
+    document.getElementById('homeBtn').style.display = 'none';
+    window.location.href = "index.html"; // Replace "index.html" with your home page URL
+  }
+
+  // Function to fetch prompts and display them
+  function fetchAndDisplayPrompt() {
+    fetch('https://my-postgres-server.vercel.app/prompts-diagnos-1')
+      .then(response => response.json())
+      .then(data => {
+        randomIndex = Math.floor(Math.random() * data.length); // Assign the random index
+        const randomPrompt = data[randomIndex].prompt;
+
+        const promptElement = document.createElement('p');
+        promptElement.textContent = randomPrompt;
+
+        // Clear previous prompt before appending new one
+        document.getElementById('promptContainer').innerHTML = '';
+
+        // Append the random prompt to the prompt container
+        document.getElementById('promptContainer').appendChild(promptElement);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }
+
+  // Function to save user input
+  function saveInput() {
+    const username = document.getElementById("username").value;
+    const response = document.getElementById("response").value;
+    const timeInSeconds = timeElapsed;
+    const promptId = randomIndex;
+
+    // Check if the name field is empty
+    if (!username.trim()) {
+        alert('Please enter your name.');
+        return;
     }
 
-    // Call fetchAndDisplayPrompt function when the page loads
-    window.onload = fetchAndDisplayPrompt;
+    const dataToSend = {
+        "username": username,
+        "prompt_id": promptId, // Use the stored randomIndex
+        "std": "5-7",
+        "writing_response": response,
+        "time": timeInSeconds
+    };
 
-    // Function to save user input
-    function saveInput() {
-        var username = document.getElementById("username").value;
-        var response = document.getElementById("response").value;
-        
-        // Use the stored randomIndex for prompt_id
-        const promptId = randomIndex;
-
-        const dataToSend = {
-            "username": username,
-            "prompt_id": promptId, // Use the stored randomIndex
-            "std": "5-7",
-            "writing_response": response
-        };
-        
-        // Send data to the server
-        fetch('https://my-postgres-server.vercel.app/writing_response', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataToSend)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Data saved successfully:', data);
-            // Redirect to response.html after saving data
-        })
-        .catch(error => {
+    // Send data to the server
+    fetch('https://my-postgres-server.vercel.app/writing_response', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Data saved successfully:', data);
+        // Redirect or show success message as needed
+        document.getElementById('submitResponse').textContent = 'Data saved successfully!';
+    })
+    .catch(error => {
             console.error('Error saving data:', error);
             // Log the error and handle it accordingly
+            clearInterval(timerInterval);
             document.getElementById("username").disabled = true;
             document.getElementById("response").disabled = true;
             document.getElementById('submitBtn').style.display = 'none';
             document.getElementById('submitResponse').innerHTML = '<span style="font-size: 24px;">Thank you for your submission, ' + username + '!</span>';
             document.getElementById('submitResponse').style.display = 'block';
             document.getElementById('homeBtn').style.display = 'inline-block';
-        });
-    }
-
-  </script>
+     });
+  }
+</script>
 
    <!-- Scroll Top -->
    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -247,6 +260,6 @@
  
    <!-- Main JS File -->
    <script src="assets/js/main.js"></script>
-   
+
 </body>
 </html>
