@@ -74,16 +74,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to start the timer
     function startTimer() {
-        startTime = Date.now(); // Record the start time
-        timerInterval = setInterval(displayTime, 1000); // Update the timer display every second
+        timerInterval = setInterval(() => {
+            timeElapsed++;
+            displayTime(); // Update the timer display every second
+        }, 1000);
     }
-    
+
     // Function to display the timer
     function displayTime() {
-        const currentTime = Date.now(); // Get the current time
-        const elapsedTime = Math.floor((currentTime - startTime) / 1000); // Calculate elapsed time in seconds
-        const minutes = Math.floor(elapsedTime / 60);
-        const seconds = elapsedTime % 60;
+        const minutes = Math.floor(timeElapsed / 60);
+        const seconds = timeElapsed % 60;
         timerDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
@@ -147,8 +147,6 @@ document.addEventListener("DOMContentLoaded", function() {
         reviewHTML += '</ul>';
 
         questionsContainer.innerHTML = reviewHTML;
-
-        stopTimer();
     }
 
     // Function to submit the form
@@ -197,14 +195,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const feedbackLink = document.createElement('a');
         feedbackLink.textContent = 'Click To Provide Feedback';
         feedbackLink.href = 'https://forms.gle/VmWRLfKCfR4MnnRp7'; // Add your feedback link here
-        feedbackLink.classList.add('btn', 'btn-primary');
+        feedbackLink.classList.add('btn', 'btn-outline-success');
         feedbackLink.target = '_blank';
         submitButton.parentNode.appendChild(feedbackLink);
 
         // Add a button for statistics
         const statisticsButton = document.createElement('button');
         statisticsButton.textContent = 'View Statistics';
-        statisticsButton.classList.add('btn', 'btn-primary', 'mx-2');
+        statisticsButton.classList.add('btn', 'btn-outline-success', 'mx-2');
         statisticsButton.onclick = function() {
             window.location.href = 'submission.html'; // Replace 'statistics.html' with your actual statistics page URL
         };
@@ -213,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Add a button for home page
         const homeButton = document.createElement('button');
         homeButton.textContent = 'Home';
-        homeButton.classList.add('btn', 'btn-primary');
+        homeButton.classList.add('btn', 'btn-outline-success');
         homeButton.onclick = function() {
             window.location.href = 'math.html'; // Replace 'index.html' with your actual home page URL
         };
