@@ -1,0 +1,70 @@
+
+/* Add your CSS styles here */
+#quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+
+#paragraph {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.passage p {
+    font-weight: bold;
+}
+
+.question p {
+    margin-bottom: 5px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    align-items: flex-start; 
+}
+
+.option {
+    margin-top: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.quiz-page h1 {
+    padding: 15px 30px;
+  background-color: #2b9049;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2em;
+}
+
+.option:hover {
+    background-color: #f0f0f0;
+}
+
+.option.selected {
+    background-color: #2b9049;
+    color: #fff;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjust margin as needed */
+}
+
+#submitButton-prepo {
+    display: block;
+    margin: 0 auto; /* Center the button horizontally */
+    padding: 10px 20px; /* Add padding to the button */
+    margin-bottom: 20px; /* Add some space at the bottom */
+    justify-content: center;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Comprehension Quiz</title>
+    <link rel="stylesheet" href="rc.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        ul {
+            text-align: left;
+            font-size: 18px;
+            list-style-position: inside; /* Align list items on the left side */
+        }
+    </style>
+
+</head>
+<body style="background-color: #ffffff;">
+    <div class="quiz-page container rounded mt-4 mb-4">
+        <h1>Reading Comprehension Quiz</h1>
+
+        <form id="nameForm">
+            <div class="form-group">
+                <input type="text" class="form-control" id="name-prepo" placeholder="Enter Your Name" name="name" required>
+                <div class="d-flex justify-content-end">
+                    <div id="timer-prepo" class="shadow p-3 mb-5 bg-body-tertiary rounded">Time: 00:00</div>
+                </div>
+            </div>
+        </form>
+
+        <div id="quiz-container">
+            <div id="paragraph-container">
+                <p id="paragraph"></p>
+            </div>
+            <div class="container"></div>
+        
+            <!-- Submit button -->
+            
+        </div>
+        <button id="submitButton-prepo" class="btn btn-outline-success">Submit</button>
+    </div>
+    <!-- Bootstrap JS (optional, only needed for certain components) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="rcc.js"></script>
+
+    <script>
+        // Prevent form submission on enter key press
+        document.getElementById("nameForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+        });
+    </script>
+
+</body>
+</html>
