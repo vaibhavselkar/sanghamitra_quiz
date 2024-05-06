@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preposition</title>
+    <link rel="stylesheet" href="../quiz.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        ul {
+            text-align: left;
+            font-size: 18px;
+            list-style-position: inside; /* Align list items on the left side */
+        }
+    </style>
+</head>
+<body style="background-color: #ffffff;">
+    <div class="quiz-page container rounded mt-4 mb-4">
+        <h1>Prepositions Confusion Between ON and FOR</h1>
+        <h2>Dear Exam Taker,</h2>
+        <ul>
+            <li>Understand the basics: Ensure you have a clear understanding of what phrasal verbs are and how they function in sentences.</li>
+            <li>Read carefully: Pay close attention to each question, considering all options before making your selection.</li>
+            <li>Time management: Manage your time wisely to answer all questions within the allotted time frame.</li>
+            <li>Process of elimination: Use the process of elimination to narrow down answer choices when unsure.</li>
+            <li>Review and revise: Take a moment to review your answers before submitting the quiz.</li>
+            <li>Stay calm: Maintain a calm and focused mindset throughout the quiz, trusting in your preparation.</li>
+        </ul>
+
+        <h2>Best of luck on your quiz!</h2>
+
+        <!-- Form to input name -->
+        <form id="nameForm">
+            <div class="form-group">
+                <input type="text" class="form-control" id="name-prepo" placeholder="Enter Your Name" name="name" required>
+                <div class="d-flex justify-content-end">
+                    <div id="timer-prepo" class="shadow p-3 mb-5 bg-body-tertiary rounded">Time: 00:00</div>
+                </div>
+
+            </div>
+        </form>
+        
+        <!-- Container for questions -->
+        <div id="questionsContainer-prepo" style="font-size: 20px;"></div>
+        
+
+        <!-- Submit button -->
+        <button id="submitButton-prepo" class="btn btn-outline-success">Submit</button>
+    </div>
+
+    <!-- JavaScript file -->
+    <script src="prepositions_on.js"></script>
+    <!-- Bootstrap JS (optional, only needed for certain components) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Prevent form submission on enter key press
+        document.getElementById("nameForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>
