@@ -195,14 +195,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const feedbackLink = document.createElement('a');
         feedbackLink.textContent = 'Click To Provide Feedback';
         feedbackLink.href = 'https://forms.gle/VmWRLfKCfR4MnnRp7'; // Add your feedback link here
-        feedbackLink.classList.add('btn', 'btn-outline-success');
+        feedbackLink.classList.add('btn', 'btn-primary');
         feedbackLink.target = '_blank';
         submitButton.parentNode.appendChild(feedbackLink);
 
         // Add a button for statistics
         const statisticsButton = document.createElement('button');
         statisticsButton.textContent = 'View Statistics';
-        statisticsButton.classList.add('btn', 'btn-outline-success', 'mx-2');
+        statisticsButton.classList.add('btn', 'btn-primary', 'mx-2');
         statisticsButton.onclick = function() {
             window.location.href = 'submission.html'; // Replace 'statistics.html' with your actual statistics page URL
         };
@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Add a button for home page
         const homeButton = document.createElement('button');
         homeButton.textContent = 'Home';
-        homeButton.classList.add('btn', 'btn-outline-success');
+        homeButton.classList.add('btn', 'btn-primary');
         homeButton.onclick = function() {
             window.location.href = 'math.html'; // Replace 'index.html' with your actual home page URL
         };
