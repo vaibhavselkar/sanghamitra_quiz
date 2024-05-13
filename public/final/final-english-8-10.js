@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function() {
             body: JSON.stringify({
                 name: nameInput.value, // Get the value from the name input field
                 score: score,
-                subject: 'English Final (5-7)', // Corrected assignment operator
+                subject: 'English Final (8-10)', // Corrected assignment operator
                 time_taken: timeElapsed // Add the time taken by the user
             })
         })
