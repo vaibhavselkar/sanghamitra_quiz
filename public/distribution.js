@@ -1,12 +1,19 @@
-// Function to update chart based on selected date and subject
+// Function to update chart based on selected subject and date range
 function updateChart() {
-  const selectedDate = document.getElementById('dateDropdown').value;
   const selectedSubject = document.getElementById('subjectDropdown').value;
+  const startDate = document.getElementById('startDatePicker').value;
+  const endDate = document.getElementById('endDatePicker').value;
+
   fetch('https://my-postgres-server.vercel.app/scores')
       .then(response => response.json())
       .then(data => {
-          // Filter data based on selected date and subject
-          const filteredData = data.filter(entry => new Date(entry.date).toLocaleDateString() === selectedDate && entry.subject === selectedSubject);
+          // Filter data based on selected subject and date range
+          const filteredData = data.filter(entry => 
+              entry.subject === selectedSubject &&
+              entry.date >= startDate && 
+              entry.date <= endDate
+          );
+
           // Extracting user names and scores
           const usernames = filteredData.map(entry => entry.name);
           const scores = filteredData.map(entry => parseInt(entry.score));
@@ -54,7 +61,7 @@ function updateChart() {
                   responsive: true,
                   maintainAspectRatio: false,
                   scales: {
-                      yAxes: [{
+                      y: [{
                           ticks: {
                               beginAtZero: true,
                               max: 100 // Set a fixed maximum value for the y-axis scale (e.g., 100)
@@ -69,35 +76,29 @@ function updateChart() {
       });
 }
 
-// Fetch data from server and populate dropdown options
+// Fetch data from server
 fetch('https://my-postgres-server.vercel.app/scores')
   .then(response => response.json())
   .then(data => {
-      // Extracting unique dates and subjects from the data
-      const dates = [...new Set(data.map(entry => new Date(entry.date).toLocaleDateString()))];
+      // Extracting unique subjects from the data
       const subjects = [...new Set(data.map(entry => entry.subject))];
-      
-      // Populate dropdown options with dates
-      const dateDropdown = document.getElementById('dateDropdown');
-      dates.forEach(date => {
-          const option = document.createElement('option');
-          option.text = date;
-          dateDropdown.add(option);
-      });
-
       // Populate dropdown options with subjects
       const subjectDropdown = document.getElementById('subjectDropdown');
+      // Populate dropdown options with subjects
       subjects.forEach(subject => {
           const option = document.createElement('option');
           option.text = subject;
           subjectDropdown.add(option);
       });
 
-      // Initially update the chart with the most recent date and first subject
-      const mostRecentDate = dates[dates.length - 1];
-      dateDropdown.value = mostRecentDate;
+      // Initially update the chart with the first subject and default date range
       updateChart();
   })
   .catch(error => {
       console.error('Error fetching data:', error);
   });
+
+// Add event listener to subject dropdown
+document.getElementById('subjectDropdown').addEventListener('change', updateChart);
+document.getElementById('startDatePicker').addEventListener('change', updateChart);
+document.getElementById('endDatePicker').addEventListener('change', updateChart);
