@@ -30,10 +30,11 @@
         <h1>The visualization of your score along with other users.</h1>
         
         <!-- Dropdown menu for selecting dates -->
-        <label for="dateDropdown">Choose a date:</label>
-        <select id="dateDropdown" onchange="updateChart()">
-            <!-- Options will be dynamically populated after fetching data -->
-        </select>
+        <label for="startDatePicker">Start Date:</label>
+        <input type="date" id="startDatePicker" onchange="updateChart()">
+
+        <label for="endDatePicker">End Date:</label>
+        <input type="date" id="endDatePicker" onchange="updateChart()">
         
         <!-- Dropdown menu for selecting subjects -->
         <label for="subjectDropdown">Choose a subject:</label>
