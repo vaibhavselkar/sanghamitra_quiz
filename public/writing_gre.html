@@ -16,59 +16,80 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-
   <style>
     body {
-        background-color: #ffffff;
-        /* Light greenish blue background */
-        font-family: Arial, sans-serif;
-        /* Set font family */
+      background-color: #ffffff;
+      font-family: Arial, sans-serif;
     }
 
     .main-content {
-        max-width: 1300px;
-        /* Limit container width */
-        margin: 80px auto;
-        /* Center container horizontally */
-        padding: 20px;
-        /* Add some padding */
-        background-color: #5fcf80;
-        /* White background for container */
-        border-radius: 10px;
-        /* Add border radius */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        /* Add box shadow */
-        color: white;
+      max-width: 1300px;
+      margin: 80px auto;
+      padding: 20px;
+      background-color: #5fcf80;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      color: white;
     }
 
     .form-control {
-        margin-bottom: 25px;
-        /* Add margin between input fields */
+      margin-bottom: 25px;
     }
 
     .response-textarea {
-        resize: vertical;
-        /* Allow vertical resizing */
-        height: 200px;
-        /* Set minimum height */
-        min-width: 80px;
-        padding: 10px;
-        /* Add padding */
-        border-radius: 5px;
-        /* Add border radius */
-        font-size: 16px;
-        /* Set font size */
-        line-height: 1.4;
-        /* Set line height */
+      resize: vertical;
+      height: 200px;
+      min-width: 80px;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    #feedbackResponse {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #0f1113;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+    }
+
+    #corrections {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #131516;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+    }
+
+    .correction-list {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    .correction-item {
+      margin-bottom: 5px;
     }
 
     #submitBtn {
-        display: block;
+      display: block;
     }
 
     #submitResponse {
-        display: none;
+      display: none;
     }
+
+    #feedbackResponse {
+      display: none;
+    }
+
+    #corrections {
+      display: none;
+    }
+
+    
+
   </style>
 </head>
 <body>
@@ -102,7 +123,7 @@
         <h5 id="promptContainer"></h5>
         <div class="d-flex justify-content-end">
           <div id="timerDisplay" class="shadow p-3 mb-5 bg-body-tertiary rounded" style="color: black;">Time: 00:00</div>
-      </div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -110,7 +131,9 @@
         <h5 id="wordCount">Word count: 0</h5>
       </div>
       <button onclick="saveInput(event)" id="submitBtn" class="btn btn-primary btn-lg">Submit</button>
-      <div id="submitResponse"></div> <!-- Display response here -->
+      <div id="submitResponse"></div> <!-- Display thank you message or error -->
+      <div id="feedbackResponse"></div> <!-- Display original feedback -->
+      <div id="corrections"></div> <!-- Display corrections -->
       <button id="homeBtn" class="btn btn-secondary btn-lg" style="display: none;" onclick="goToHomePage()">Home Page</button>
     </div>
   </main>
@@ -151,125 +174,158 @@
   </footer>
 
   <script>
-    // Declare a variable to store the random index
     let randomIndex;
     let timerInterval;
     let timeElapsed = 0;
 
-  // Function to fetch prompts and display them
-  function fetchAndDisplayPrompt() {
-    fetch('https://my-postgres-server.vercel.app/prompts')
-      .then(response => response.json())
-      .then(data => {
-        randomIndex = Math.floor(Math.random() * data.length); // Assign the random index
-        const randomPrompt = data[randomIndex].prompt;
-        const promptElement = document.createElement('p');
-        promptElement.textContent = randomPrompt;
-        // Clear previous prompt before appending new one
-        document.getElementById('promptContainer').innerHTML = '';
-        // Append the random prompt to the prompt container
-        document.getElementById('promptContainer').appendChild(promptElement);
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }
+    // Function to fetch prompts and display them
+    function fetchAndDisplayPrompt() {
+      fetch('https://my-postgres-server.vercel.app/prompts')
+        .then(response => response.json())
+        .then(data => {
+          randomIndex = Math.floor(Math.random() * data.length);
+          const randomPrompt = data[randomIndex].prompt;
+          const promptElement = document.createElement('p');
+          promptElement.textContent = randomPrompt;
+          document.getElementById('promptContainer').innerHTML = '';
+          document.getElementById('promptContainer').appendChild(promptElement);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+
     // Function to start the timer
     function startTimer() {
-    timerInterval = setInterval(() => {
-      timeElapsed++;
-      displayTime();
-    }, 1000);
-  }
-  function resetInputs() {
-  document.getElementById("username").value = "";
-  document.getElementById("response").value = "";
-  document.getElementById("wordCount").textContent = "Word count: 0";
-}
-
-  // Function to display the time
-  function displayTime() {
-    const minutes = Math.floor(timeElapsed / 60);
-    const seconds = timeElapsed % 60;
-    document.getElementById('timerDisplay').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
-
-  function countWords() {
-    const responseText = document.getElementById("response").value;
-    const wordCount = responseText.split(/\s+/).filter(word => word.length > 0).length;
-    document.getElementById("wordCount").textContent = `Word count: ${wordCount}`;
-    
-    // Enable or disable the submit button based on word count
-    const submitBtn = document.getElementById("submitBtn");
-    if (wordCount >= 200) {
-      submitBtn.removeAttribute("disabled");
-    } else {
-      submitBtn.setAttribute("disabled", "true");
+      timerInterval = setInterval(() => {
+        timeElapsed++;
+        displayTime();
+      }, 1000);
     }
-  }
+
+    // Function to reset form inputs
+    function resetInputs() {
+      document.getElementById("username").value = "";
+      document.getElementById("response").value = "";
+      document.getElementById("wordCount").textContent = "Word count: 0";
+    }
+
+    // Function to display elapsed time
+    function displayTime() {
+      const minutes = Math.floor(timeElapsed / 60);
+      const seconds = timeElapsed % 60;
+      document.getElementById('timerDisplay').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // Function to count words in the response textarea
+    function countWords() {
+      const responseText = document.getElementById("response").value;
+      const wordCount = responseText.split(/\s+/).filter(word => word.length > 0).length;
+      document.getElementById("wordCount").textContent = `Word count: ${wordCount}`;
+      
+      // Enable or disable the submit button based on word count
+      const submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = !(wordCount >= 200);
+    }
   
-  // Function to navigate to home page
-  function goToHomePage() {
-    resetInputs();
-    window.location.href = "index.html"; // Replace "index.html" with your home page URL
-  }
-  
-  // Call fetchAndDisplayPrompt function when the page loads
-  window.onload = function() {
-    startTimer();
-    fetchAndDisplayPrompt();
-  };
+  // Function to navigate to home page    // Function to navigate to the home page
+    function goToHomePage() {
+      resetInputs();
+      window.location.href = "index.html"; // Replace "index.html" with your home page URL
+    }
 
+    // Function to save user input
+    function saveInput(event) {
+      event.preventDefault();
+      var username = document.getElementById("username").value;
+      var response = document.getElementById("response").value;
+      const timeInSeconds = timeElapsed;
+      const promptId = randomIndex;
 
-  // Function to save user input
-  function saveInput(event) {
-    event.preventDefault();
-    var username = document.getElementById("username").value;
-    var response = document.getElementById("response").value;
-    const timeInSeconds = timeElapsed;
-    // Use the stored randomIndex for prompt_id
-    const promptId = randomIndex;
-
-    if (!username.trim()) {
+      if (!username.trim()) {
         alert('Please enter your name.');
         return;
-    }
+      }
 
-    const dataToSend = {
+      const dataToSend = {
         "username": username,
-        "prompt_id": promptId, // Use the stored randomIndex
+        "prompt_id": promptId,
         "std": "GRE",
         "writing_response": response,
         "time": timeInSeconds
-    };
-    
-    // Send data to the server
-    fetch('https://my-postgres-server.vercel.app/writing_response', {
+      };
+
+      // Send data to the server
+      fetch('https://my-postgres-server.vercel.app/writing_response', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(dataToSend)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Data saved successfully:', data);
-        // Display thank you message instead of redirecting
-        document.getElementById('submitBtn').style.display = 'none';
-        document.getElementById('submitResponse').innerHTML = 'Thank you for your submission, ' + username + '!';
-        document.getElementById('submitResponse').style.display = 'block';
-        document.getElementById('homeBtn').style.display = 'inline-block';
-    })
-    .catch(error => {
+      })
+      .then(response => response.json())
+      .catch(error => {
         console.error('Error saving data:', error);
         // Log the error and handle it accordingly
         clearInterval(timerInterval);
+        // Disable form elements
         document.getElementById("username").disabled = true;
         document.getElementById("response").disabled = true;
+        // Hide submit button
         document.getElementById('submitBtn').style.display = 'none';
+        // Show submission confirmation message
         document.getElementById('submitResponse').innerHTML = '<span style="font-size: 24px;">Thank you for your submission, ' + username + '!</span>';
+        showFeedback(response);
         document.getElementById('submitResponse').style.display = 'block';
+        // Show home button
         document.getElementById('homeBtn').style.display = 'inline-block';
-    });
+      });
     }
+
+    // Function to show feedback
+    function showFeedback(response) {
+      const dataToSend = {
+        "feedback": response
+      };
+
+      fetch('https://flask-hello-world-2-eta.vercel.app/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Feedback received:', data);
+        document.getElementById('feedbackResponse').textContent = 'Original Feedback: ' + data['Original Feedback'];
+        
+        // Display corrections if available
+        if (data['Corrections']) {
+          const correctionsList = document.createElement('ul');
+          for (const [original, corrected] of Object.entries(data['Corrections'])) {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${original} :- ${corrected}`;
+            correctionsList.appendChild(listItem);
+          }
+          document.getElementById('corrections').innerHTML = '<strong>Corrections:</strong>';
+          document.getElementById('corrections').appendChild(correctionsList);
+          document.getElementById('corrections').style.display = 'block'; // Show corrections element
+        } else {
+          document.getElementById('corrections').textContent = 'No corrections needed.';
+          document.getElementById('corrections').style.display = 'block'; // Show corrections element
+        }
+      })
+      .catch(error => {
+        console.error('Error receiving feedback:', error);
+        // Handle errors accordingly
+        alert('Error receiving feedback. Please try again later.');
+      });
+    }
+
+    // Call fetchAndDisplayPrompt function when the page loads
+    window.onload = function() {
+      startTimer();
+      fetchAndDisplayPrompt();
+    };
   </script>
 
   <!-- Scroll Top -->
@@ -291,3 +347,4 @@
    
 </body>
 </html>
+
