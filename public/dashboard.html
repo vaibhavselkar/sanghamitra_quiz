@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .user-info {
+            margin-top: 30px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+        .user-info p {
+            margin-bottom: 10px;
+        }
+        .cookies {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            max-width: 600px;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Dashboard</h1>
+        <div class="user-info">
+            <p><strong>Name:</strong> <span id="userName"></span></p>
+            <p><strong>Email:</strong> <span id="userEmail"></span></p>
+        </div>
+
+        <div class="cookies">
+            <h3>Current Cookies:</h3>
+            <ul id="cookieList">
+                <!-- Cookies will be added dynamically here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        async function fetchUserData() {
+            try {
+                const response = await fetch('http://localhost:4000/dashboard', {
+                    method: 'GET',
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include' // Send cookies with the request
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const userData = await response.json();
+                console.log(userData);
+
+                // Update UI with user data
+                document.getElementById('userName').textContent = userData.name;
+                document.getElementById('userEmail').textContent = userData.email;
+
+                // Display cookies
+                displayCookies();
+
+            } catch (error) {
+                console.log('Fetch user data failed:');
+            }
+        }
+
+        async function displayCookies() {
+            const cookies = document.cookie.split('; ');
+            const cookieList = document.getElementById('cookieList');
+
+            cookieList.innerHTML = '';
+
+            cookies.forEach(cookie => {
+                const [name, value] = cookie.split('=');
+                const li = document.createElement('li');
+                li.textContent = `${name}: ${value}`;
+                cookieList.appendChild(li);
+            });
+        }
+
+        fetchUserData();
+    </script>
+</body>
+</html>
