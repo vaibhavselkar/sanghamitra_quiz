@@ -45,13 +45,6 @@
             <p><strong>Name:</strong> <span id="userName"></span></p>
             <p><strong>Email:</strong> <span id="userEmail"></span></p>
         </div>
-
-        <div class="cookies">
-            <h3>Current Cookies:</h3>
-            <ul id="cookieList">
-                <!-- Cookies will be added dynamically here -->
-            </ul>
-        </div>
     </div>
 
     <script>
@@ -83,28 +76,11 @@
                 document.getElementById('userName').textContent = userData.name;
                 document.getElementById('userEmail').textContent = userData.email;
 
-                // Display cookies
-                displayCookies();
-
             } catch (error) {
                 console.error('Fetch user data failed:', error);
                 // Redirect to login page if fetching user data fails
                 window.location.href = 'user_login.html';
             }
-        }
-
-        async function displayCookies() {
-            const cookies = document.cookie.split('; ');
-            const cookieList = document.getElementById('cookieList');
-
-            cookieList.innerHTML = '';
-
-            cookies.forEach(cookie => {
-                const [name, value] = cookie.split('=');
-                const li = document.createElement('li');
-                li.textContent = `${name}: ${value}`;
-                cookieList.appendChild(li);
-            });
         }
 
         fetchUserData();
