@@ -14,7 +14,6 @@
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   
     <!-- Main CSS File -->
@@ -102,8 +101,9 @@
             <input type="email" id="email" name="email" required>
         </div>
         <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <label for="current-password">Current Password:</label>
+            <input type="password" id="current-password" name="current-password" autocomplete="current-password">
+
         </div>
         <div class="mb-2">
             <input type="checkbox" id="showPassword"> Show Password
@@ -119,39 +119,39 @@
     <script>
         document.getElementById("registrationForm").addEventListener("submit", async function(event) {
             event.preventDefault();
-
+    
             const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
+            const password = document.getElementById("current-password").value;
+    
             try {
-            const response = await fetch('https://sanghamitra-learning-server.vercel.app/signin', {
-                method: 'POST',
-                credentials: 'include', // Important: send cookies
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Login successful
-                // Redirect or perform actions for authenticated user
-                window.location.href = 'dashboard.html';
-            } else {
-                // Login failed
-                document.getElementById("message").textContent = `Login failed: ${data.error}`;
+                const response = await fetch('https://sanghamitra-learning-server.vercel.app/signin', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+    
+                const data = await response.json();
+    
+                if (response.ok) {
+                    // Login successful
+                    // Redirect to dashboard.html
+                    window.location.href = 'dashboard.html';
+                } else {
+                    // Login failed
+                    document.getElementById("message").textContent = `Login failed: ${data.error}`;
+                }
+            } catch (error) {
+                // Error occurred during fetch or processing
+                console.error('Error during login:', error);
+                document.getElementById("message").textContent = 'An error occurred. Please try again later.';
             }
-        } catch (error) {
-            // Error occurred during fetch or processing
-            console.error('Error during login:', error);
-            document.getElementById("message").textContent = 'An error occurred. Please try again later.';
-        }
         });
-
+    
         document.getElementById('showPassword').addEventListener('change', function() {
-            var passwordField = document.getElementById('password');
+            var passwordField = document.getElementById('current-password');
             if (this.checked) {
                 passwordField.type = 'text';
             } else {
