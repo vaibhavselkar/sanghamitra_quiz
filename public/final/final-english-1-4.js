@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
         statisticsButton.textContent = 'View Statistics';
         statisticsButton.classList.add('btn', 'btn-outline-success', 'mx-2');
         statisticsButton.onclick = function() {
-            window.location.href = 'submission.html'; // Replace 'statistics.html' with your actual statistics page URL
+            window.location.href = 'final-leaderboard-submission.html'; // Replace 'statistics.html' with your actual statistics page URL
         };
         submitButton.parentNode.appendChild(statisticsButton);
         
