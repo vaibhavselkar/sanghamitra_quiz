@@ -101,10 +101,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const score = calculateScore(); // Calculate the score
         displayReview(score); // Display review based on the score
         submitForm(nameInput, score); // Submit the form
-        
+    
         // Remove the submit button
         submitButton.style.display = 'none';
-        
+    
         // Add a new button for feedback
         const feedbackLink = document.createElement('a');
         feedbackLink.textContent = 'Click To Provide Feedback';
@@ -112,16 +112,27 @@ document.addEventListener("DOMContentLoaded", function() {
         feedbackLink.classList.add('btn', 'btn-outline-success');
         feedbackLink.target = '_blank';
         submitButton.parentNode.appendChild(feedbackLink);
-
+    
+        // Add a button for review
+        const reviewButton = document.createElement('button');
+        reviewButton.textContent = 'Review Your Answers';
+        reviewButton.classList.add('btn', 'btn-outline-success', 'mx-2');
+        reviewButton.onclick = function() {
+            displayReview(score); // Display review again if needed
+        };
+        submitButton.parentNode.appendChild(reviewButton);
+    
         // Add a button for statistics
         const statisticsButton = document.createElement('button');
         statisticsButton.textContent = 'View Statistics';
         statisticsButton.classList.add('btn', 'btn-outline-success', 'mx-2');
         statisticsButton.onclick = function() {
-            window.location.href = 'submission.html'; // Replace 'statistics.html' with your actual statistics page URL
+            const userName = nameInput.value.trim(); // Get user's input name
+            const leaderboardURL = `final-leaderboard-submission.html?userName=${encodeURIComponent(userName)}`;
+            window.location.href = leaderboardURL; // Redirect to the leaderboard page with the user's name
         };
         submitButton.parentNode.appendChild(statisticsButton);
-        
+    
         // Add a button for home page
         const homeButton = document.createElement('button');
         homeButton.textContent = 'Home';
@@ -130,8 +141,8 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = 'english.html'; // Replace 'index.html' with your actual home page URL
         };
         submitButton.parentNode.appendChild(homeButton);
-
     });
+    
 
     // Function to calculate score
     function calculateScore() {
@@ -155,12 +166,12 @@ document.addEventListener("DOMContentLoaded", function() {
         if (score >= 70) {
             reviewMessage = `Congratulations! You Have Scored ${scorePercentage}%.`;
         } else {
-            reviewMessage = `Congratulations! You Have Scored ${scorePercentage}%.`;
+            reviewMessage = `You Have Scored ${scorePercentage}%. Keep practicing!`;
         }
     
         let reviewHTML = `
             <h1>${reviewMessage}</h1>
-            <h2> Please review your answers below. Correct answers are highlighted in green, while incorrect answers are highlighted in red. </h2>
+            <h2>Please review your answers below. Correct answers are highlighted in green, while incorrect answers are highlighted in red.</h2>
             <ul>
         `;
         questions.forEach((question, index) => {
@@ -175,20 +186,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else if (selectedOption === option && selectedOption === correctOption) {
                     // Correctly selected option
                     reviewHTML += `<span style="color: green;">${option}. ${question['option_' + option]}</span><br>`;
+                } else if (selectedOption === null && option === correctOption) {
+                    // Correct option for unattempted question
+                    reviewHTML += `<span style="color: green;">${option}. ${question['option_' + option]}</span><br>`;
                 } else if (option === correctOption) {
-                    // Correct option
+                    // Correct option for other cases
                     reviewHTML += `<span style="color: green;">${option}. ${question['option_' + option]}</span><br>`;
                 } else {
                     // Incorrect option (not selected)
                     reviewHTML += `${option}. ${question['option_' + option]}<br>`;
                 }
             });
+            if (selectedOption === null) {
+                reviewHTML += `<span style="color: orange;">You did not attempt this question.</span><br>`;
+            }
             reviewHTML += `</li><br>`;
         });
         reviewHTML += '</ul>';
     
         questionsContainer.innerHTML = reviewHTML;
     }
+    
     
     function submitForm(nameInput, score) {
         fetch('https://my-postgres-server.vercel.app/data', {
