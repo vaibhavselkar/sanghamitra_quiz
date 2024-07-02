@@ -1,1 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS */
+        .score-container {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 50px;
+            background-color: #2b9049;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+        .leaderboard-container {
+            margin-top: 50px;
+        }
+        .table thead th {
+            background-color: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body style="background-color: #f8e9fb;">
+    <div class="container">
+        <div class="score-container">
+            <h1>Congratulations, <span id="userName"></span>!</h1>
+            <p>Thank you for taking the quiz!</p>
+        </div>
+
+        <h1>The Leaderboard for the test.</h1>
+
+        <!-- Container div for the leaderboard -->
+        <div class="leaderboard-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Time Taken (seconds)</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <!-- Leaderboard rows will be dynamically populated -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Button to navigate to the home page -->
+        <button onclick="goToHomePage()" class="btn btn-outline-success">Home Page</button>
+    </div>
+
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to navigate to the home page
+        function goToHomePage() {
+            window.location.href = 'index.html'; // Replace 'index.html' with your actual home page URL
+        }
+
+        // Get user's name from query parameters or another source
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('userName') || 'User'; // Replace 'User' with a default value if needed
+        document.getElementById('userName').textContent = userName;
+    </script>
+    <script src="leaderboard_final_analytics.js"></script>
+</body>
+</html>
 
