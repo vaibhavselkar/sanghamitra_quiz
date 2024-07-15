@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Quiz Game</title>
+    <link rel="stylesheet" href="vocabulary-diagnostic-test.css">
+</head>
+<body>
+    <div id="home" class="page active">
+        <h1>Welcome to the Diagnostic Vocabulary Assessment</h1>
+        <button id="start-button">Start Quiz</button>
+    </div>
+    <div id="quiz" class="page hidden">
+        <div class="quiz-container">
+            <h2 id="question">Question</h2>
+            <div id="options">
+                <button class="option" data-option="a"></button>
+                <button class="option" data-option="b"></button>
+                <button class="option" data-option="c"></button>
+                <button class="option" data-option="d"></button>
+            </div>
+            <div class="buttons">
+                <button id="previous-button" class="hidden">Previous Question</button>
+                <button id="next-button" class="hidden">Next Question</button>
+                <button id="end-button" class="hidden">End Quiz</button>
+            </div>
+        </div>
+        <div id="feedback" class="hidden">
+            <p id="explanation">Explanation: </p>
+            <p id="synonyms">Synonyms: </p>
+            <p id="antonyms">Antonyms: </p>
+            <p id="phonetic">Phonetic: </p>
+            <p id="points">Points Earned: </p>
+            <p id="cefr">CEFR Level: </p>
+        </div>
+    </div>
+    <div id="result" class="page hidden">
+        <h2>Quiz Completed!</h2>
+        <p id="total-score">Total Points: </p>
+        <div id="comprehensive-analysis"></div>
+        <button id="restart-button">Restart Quiz</button>
+    </div>
+    <script src="vocabulary-diagnostic-test.js"></script>
+</body>
+</html>
